@@ -46,12 +46,47 @@ function validarCPF($cpf) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome_empresa = $_POST['nome_empresa'];
+    $cep = $_POST['cep'];
+    $logradouro = $_POST['logradouro'];
+    $numero = $_POST['numero'];
     $endereco = $_POST['endereco'];
+    $bairro = $_POST['bairro'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
     $cnpj = $_POST['cnpj'];
-    $nome_cliente = $_POST['nome_cliente'];
     $cpf = $_POST['cpf'];
-    $forma_pagamento = $_POST['forma_pagamento'];
+    $telefone = $_POST['telefone'];
+    $ie = $_POST['ie'];
+    $nome_cliente = $_POST['nome_cliente'];
+    $cpf_ou_cnpj = $_POST['cpf_ou_cnpj'];
+    $cpf_cliente = $_POST['cpf'];
+    $cnpj_cliente = $_POST['cnpj'];
+    $cep_cliente = $_POST['cep'];
+    $logradouro_cliente = $_POST['logradouro'];
+    $numero_cliente = $_POST['numero'];
+    $endereco_cliente = $_POST['endereco'];
+    $bairro_cliente = $_POST['bairro'];
+    $cidade_cliente = $_POST['cidade'];
+    $estado_cliente = $_POST['estado'];
     $valor_total = $_POST['valor_total'];
+    $descricao_servico = $_POST['descricao_servico'];
+    $codigo_servico = $_POST['codigo_servico'];
+    $valor_servico = $_POST['valor_servico'];
+    $aliquota_iss = $_POST['aliquota_iss'];
+    $valor_iss = $_POST['valor_iss'];
+    $base_calculo = $_POST['base_calculo'];
+    $natureza_operacao = $_POST['natureza_operacao'];
+    $regime_tributacao = $_POST['regime_tributacao'];
+    $optante_simples = $_POST['optante_simples'];
+    $iss_retido = $_POST['iss_retido'];
+    $responsavel_iss = $_POST['responsavel_iss'];
+    $data_emissao = $_POST['data_emissao'];
+    $numero_nf = $_POST['numero_nf'];
+    $serie = $_POST['serie'];
+    $codigo_verificacao = $_POST['codigo_verificacao'];
+    $outras_retencoes = $_POST['outras_retencoes'];
+    $formato_saida = $_POST['formato_saida'];
+    $forma_pagamento = $_POST['forma_pagamento'];
 
     if (!validarCNPJ($cnpj)) {
         echo "<script>alert('CNPJ inválido!'); window.history.back();</script>";
@@ -62,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>alert('CPF inválido!'); window.history.back();</script>";
         exit;
     }
+}
 
     $nota_fiscal = "
         <h2>Nota Fiscal</h2>
