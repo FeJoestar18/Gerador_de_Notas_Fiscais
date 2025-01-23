@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import geradorCNPJ from '../support/geradorRandomCNPJ';
 import generateRandomCPF from '../support/geradorRandomCPF';
 
-
 describe('template spec', () => {
   it('passes', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
