@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <script src="../js/BuscarEndereco.js"></script>
+    <script src="js/BuscarEndereco.js"></script>
     <script src="js/MostrarCampos.js"></script>
     <title>Gerador de Notas Fiscais</title>
 </head>
@@ -16,22 +16,21 @@
         
         <!-- <label for="telefone">Telefone:</label>
         <input type="text" id="telefone" name="telefone" required><br> -->
-        
+
         <label for="cep">CEP:</label>
         <input type="text" id="cep" name="cep" maxlength="9" placeholder="CEP" onblur="buscarEndereco()" required><br>
 
         <label for="endereco">Endereço:</label>
-        <input type="text" id="endereco" name="endereco" required><br>
-        
-        
+        <input type="text" id="endereco" name="endereco" readonly><br>
+
         <label for="bairro">Bairro:</label>
-        <input type="text" id="bairro" name="bairro" required><br>
+        <input type="text" id="bairro" name="bairro" readonly><br>
 
         <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" name="cidade" required><br>
+        <input type="text" id="cidade" name="cidade" readonly><br>
 
         <label for="estado">Estado:</label>
-        <input type="text" id="estado" name="estado" required><br>
+        <input type="text" id="estado" name="estado" readonly><br>
 
         <label for="cnpj">CNPJ:</label>
         <input type="text" id="cnpj" name="cnpj" maxlength="18" required><br>
