@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/BuscarEndereco.js"></script>
     <script src="js/MostrarCampos.js"></script>
+    <script src="js/BuscarEnderecoCliente.js"></script>
     <title>Gerador de Notas Fiscais</title>
 </head>
 <body>
@@ -21,11 +22,11 @@
         <input type="text" id="cep" name="cep" maxlength="9" onblur="buscarEndereco()" required><br>
 
         <label for="logradouro">Logradouro</label>
-        <input type="text" id="Logradouro" name="Logradouro" required><br>
+        <input type="text" id="logradouro" name="logradouro" required><br>
 
-        <label for="lumero">Numero</label>
-        <input type="text" id="Numero" name="Numero" maxlength="5" required><br>
-        
+        <label for="numero">Numero</label>
+        <input type="text" id="numero" name="numero" maxlength="5" required><br>
+
         <label for="endereco">Endereço:</label>
         <input type="text" id="endereco" name="endereco" readonly><br>
 
@@ -34,7 +35,7 @@
 
         <label for="cidade">Cidade:</label>
         <input type="text" id="cidade" name="cidade" readonly><br>
-        
+
         <label for="estado">Estado:</label>
         <input type="text" id="estado" name="estado" readonly><br>
         
@@ -73,7 +74,7 @@
         </div>
         
         <label for="cep_cliente">CEP:</label>
-        <input type="text" id="cep_cliente" name="cep_cliente" maxlength="9" onblur="buscarEndereco()" required><br> 
+        <input type="text" id="cep_cliente" name="cep_cliente" maxlength="9" onblur="buscarEnderecoCliente()" required><br> 
 
         <label for="logradouro_cliente">Logradouro</label>
         <input type="text" id="logradouro_cliente" name="logradouro_cliente" required><br>
@@ -92,9 +93,6 @@
         
         <label for="estado_cliente">Estado:</label>
         <input type="text" id="estado_cliente" name="estado_cliente" readonly><br>
-        
-        <label for="valor_total">Valor Total:</label>
-        <input type="number" id="valor_total" name="valor_total" step="0.01" required><br>
         
         <h1>Dados do Serviço Prestado</h1>
         <label for="descricao_servico">Descrição do Serviço:</label>
@@ -161,6 +159,9 @@
             <option value="Cartão de Crédito">Cartão de Crédito</option>
             <option value="Boleto Bancário">Boleto Bancário</option>
         </select><br>
+
+        <label for="valor_total">Valor Total:</label>
+        <input type="number" id="valor_total" name="valor_total" step="0.01" required><br>
         
         <input type="submit" value="Gerar Nota Fiscal">
 
