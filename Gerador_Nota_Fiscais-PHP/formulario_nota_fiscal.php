@@ -47,8 +47,8 @@
         <label for="telefone">Telefone:</label>
         <input type="text" id="telefone" name="telefone" required><br>
 
-        <label for="I.E">Inscrição Estadual:</label>
-        <input type="text" id="I.E" name="I.E" required><br>
+        <label for="ie">Inscrição Estadual:</label>
+        <input type="text" id="ie" name="ie" required><br>
 
         <h1>Tomador de Serviço</h1>
 
@@ -63,42 +63,42 @@
         </select>
 
         <div id="campoCpf" style="display: none;">
-            <label for="cpf">Digite o CPF</label>
-            <input type="text" id="cpf" name="cpf" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>" />
+            <label for="cpf_cliente">Digite o CPF</label>
+            <input type="text" id="cpf_cliente" name="cpf_cliente" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>" />
         </div>
         
         <div id="campoCnpj" style="display: none;">
-            <label for="cnpj">Digite o CNPJ</label>
-            <input type="text" id="cnpj" name="cnpj" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>" />
+            <label for="cnpj_cliente">Digite o CNPJ</label>
+            <input type="text" id="cnpj_cliente" name="cnpj_cliente" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>" />
         </div>
         
-        <label for="cep">CEP:</label>
-        <input type="text" id="cep" name="cep" maxlength="9" placeholder="CEP" onblur="buscarEndereco()" required><br> 
+        <label for="cep_cliente">CEP:</label>
+        <input type="text" id="cep_cliente" name="cep_cliente" maxlength="9" onblur="buscarEndereco()" required><br> 
 
-        <label for="Logradouro">Logradouro</label>
-        <input type="text" id="Logradouro" name="Logradouro" placeholder="Logradouro" required><br>
+        <label for="logradouro_cliente">Logradouro</label>
+        <input type="text" id="logradouro_cliente" name="logradouro_cliente" required><br>
         
-        <label for="Numero">Numero</label>
-        <input type="text" id="Numero" name="Numero" placeholder="Numero" maxlength="5" required><br>
+        <label for="numero_cliente">Numero</label>
+        <input type="text" id="numero_cliente" name="numero_cliente" maxlength="5" required><br>
         
-        <label for="endereco">Endereço:</label>
-        <input type="text" id="endereco" name="endereco" readonly><br>
+        <label for="endereco_cliente">Endereço:</label>
+        <input type="text" id="endereco_cliente" name="endereco_cliente" readonly><br>
         
-        <label for="bairro">Bairro:</label>
-        <input type="text" id="bairro" name="bairro" readonly><br>
+        <label for="bairro_cliente">Bairro:</label>
+        <input type="text" id="bairro_cliente" name="bairro_cliente" readonly><br>
         
-        <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" name="cidade" readonly><br>
+        <label for="cidade_cliente">Cidade:</label>
+        <input type="text" id="cidade_cliente" name="cidade_cliente" readonly><br>
         
-        <label for="estado">Estado:</label>
-        <input type="text" id="estado" name="estado" readonly><br>
+        <label for="estado_cliente">Estado:</label>
+        <input type="text" id="estado_cliente" name="estado_cliente" readonly><br>
         
         <label for="valor_total">Valor Total:</label>
         <input type="number" id="valor_total" name="valor_total" step="0.01" required><br>
         
         <h1>Dados do Serviço Prestado</h1>
         <label for="descricao_servico">Descrição do Serviço:</label>
-        <input type="text" id="" name="" required>
+        <input type="text" id="descricao_servico" name="descricao_servico" required>
 
         <label for="codigo_servico">Codgio do Serviço:</label>
         <input type="text" id="codigo_servico" name="codigo_servico" required>
@@ -149,7 +149,7 @@
         <input type="text" id="outras_retencoes" name="outras_retencoes" required><br>
 
         <h1>Formas de Pagamento</h1>
-        
+
         <label for="formato_saida">Formato de Saída:</label>
         <select id="formato_saida" name="formato_saida" required>
             <option value="pdf">PDF</option>

@@ -57,8 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cpf = $_POST['cpf'];
     $telefone = $_POST['telefone'];
     $ie = $_POST['ie'];
+
+    // Dados do Tomador de Serviços
     $nome_cliente = $_POST['nome_cliente'];
-    $cpf_ou_cnpj = $_POST['cpf_ou_cnpj'];
     $cpf_cliente = $_POST['cpf'];
     $cnpj_cliente = $_POST['cnpj'];
     $cep_cliente = $_POST['cep'];
@@ -69,22 +70,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cidade_cliente = $_POST['cidade'];
     $estado_cliente = $_POST['estado'];
     $valor_total = $_POST['valor_total'];
+
+    // Dados do Serviço do Serviço prestado
     $descricao_servico = $_POST['descricao_servico'];
     $codigo_servico = $_POST['codigo_servico'];
     $valor_servico = $_POST['valor_servico'];
     $aliquota_iss = $_POST['aliquota_iss'];
     $valor_iss = $_POST['valor_iss'];
     $base_calculo = $_POST['base_calculo'];
+
+    // Informaçoes fiscais e Tributarias
     $natureza_operacao = $_POST['natureza_operacao'];
     $regime_tributacao = $_POST['regime_tributacao'];
     $optante_simples = $_POST['optante_simples'];
     $iss_retido = $_POST['iss_retido'];
     $responsavel_iss = $_POST['responsavel_iss'];
+
+    // Outras Informações
     $data_emissao = $_POST['data_emissao'];
     $numero_nf = $_POST['numero_nf'];
     $serie = $_POST['serie'];
     $codigo_verificacao = $_POST['codigo_verificacao'];
+
+    // Outras Incidências
     $outras_retencoes = $_POST['outras_retencoes'];
+    
+    // Formas de Pagamento
     $formato_saida = $_POST['formato_saida'];
     $forma_pagamento = $_POST['forma_pagamento'];
 
@@ -99,18 +110,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-    $nota_fiscal = "
-        <h2>Nota Fiscal</h2>
-        <table>
-            <tr><th>Empresa</th><td>$nome_empresa</td></tr>
-            <tr><th>Endereço</th><td>$endereco</td></tr>
-            <tr><th>CNPJ</th><td>$cnpj</td></tr>
-            <tr><th>Cliente</th><td>$nome_cliente</td></tr>
-            <tr><th>CPF</th><td>$cpf</td></tr>
-            <tr><th>Forma de Pagamento</th><td>$forma_pagamento</td></tr>
-            <tr><th>Valor Total</th><td>R$ " . number_format($valor_total, 2, ',', '.') . "</td></tr>
-        </table>
-    ";
+$nota_fiscal = "
+<h2>Nota Fiscal</h2>
+<table>
+    <tr><th>Empresa</th><td>$nome_empresa</td></tr>
+    <tr><th>CEP</th><td>$cep</td></tr>
+    <tr><th>Logradouro</th><td>$logradouro</td></tr>
+    <tr><th>Número</th><td>$numero</td></tr>
+    <tr><th>Endereço</th><td>$endereco</td></tr>
+    <tr><th>Bairro</th><td>$bairro</td></tr>
+    <tr><th>Cidade</th><td>$cidade</td></tr>
+    <tr><th>Estado</th><td>$estado</td></tr>
+    <tr><th>CNPJ</th><td>$cnpj</td></tr>
+    <tr><th>CPF</th><td>$cpf</td></tr>
+    <tr><th>Telefone</th><td>$telefone</td></tr>
+    <tr><th>Inscrição Estadual</th><td>$ie</td></tr>
+
+    <h2>Tomador de Serviços</h2>
+    <tr><th>Cliente</th><td>$nome_cliente</td></tr>
+    <tr><th>CPF/CNPJ</th><td>$cpf_ou_cnpj</td></tr>
+    <tr><th>CEP Cliente</th><td>$cep_cliente</td></tr>
+    <tr><th>Logradouro Cliente</th><td>$logradouro_cliente</td></tr>
+    <tr><th>Número Cliente</th><td>$numero_cliente</td></tr>
+    <tr><th>Endereço Cliente</th><td>$endereco_cliente</td></tr>
+    <tr><th>Bairro Cliente</th><td>$bairro_cliente</td></tr>
+    <tr><th>Cidade Cliente</th><td>$cidade_cliente</td></tr>
+    <tr><th>Estado Cliente</th><td>$estado_cliente</td></tr>
+    <tr><th>Valor Total</th><td>R$ " . number_format($valor_total, 2, ',', '.') . "</td></tr>
+
+    <h2>Dados do Serviço Prestado</h2>
+    <tr><th>Descrição do Serviço</th><td>$descricao_servico</td></tr>
+    <tr><th>Código do Serviço</th><td>$codigo_servico</td></tr>
+    <tr><th>Valor do Serviço</th><td>$valor_servico</td></tr>
+    <tr><th>Aliquota ISS</th><td>$aliquota_iss</td></tr>
+    <tr><th>Valor do ISS</th><td>$valor_iss</td></tr>
+    <tr><th>Base do Cálculo</th><td>$base_calculo</td></tr>
+
+    <h2>Informações Fiscais e Tributárias</h2>
+    <tr><th>Natureza da Operação</th><td>$natureza_operacao</td></tr>
+    <tr><th>Regime Especial de Tributação</th><td>$regime_tributacao</td></tr>
+    <tr><th>Optante pelo Simples Nacional</th><td>$optante_simples</td></tr>
+    <tr><th>ISS Retido</th><td>$iss_retido</td></tr>
+    <tr><th>Responsável pelo Recolhimento do ISS</th><td>$responsavel_iss</td></tr>
+
+    <h2>Outras Retenções</h2>
+    <tr><th>Data de Emissão</th><td>$data_emissao</td></tr>
+    <tr><th>Número da Nota Fiscal</th><td>$numero_nf</td></tr>
+    <tr><th>Série</th><td>$serie</td></tr>
+    <tr><th>Código de Verificação</th><td>$codigo_verificacao</td></tr>
+
+    <h2>Outras Incidências</h2>
+    <tr><th>Outras Retenções</th><td>$outras_retencoes</td></tr>
+</table>
+";
 
     require_once __DIR__ . '/vendor/autoload.php';
     $pdf = new TCPDF();
