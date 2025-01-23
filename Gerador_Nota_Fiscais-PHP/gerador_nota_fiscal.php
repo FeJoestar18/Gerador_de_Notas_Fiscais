@@ -1,5 +1,6 @@
 <?php
 include('conexao.php');
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 function validarCNPJ($cnpj) {
     $cnpj = preg_replace('/\D/', '', $cnpj);
@@ -79,6 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdf = new TCPDF();
     $pdf->AddPage();
     $pdf->writeHTML($nota_fiscal, true, false, true, false, '');
+
+    if ($forma_pagamento === 'Boleto Bancário') {
+        require_once __DIR__ . '/vendor/autoload.php';
+        $barcode_generator = new BarcodeGeneratorPNG();
+        $codigo_barras = $barcode_generator->getBarcode('12345678901234567890123456', $barcode_generator::TYPE_CODE_128);
+        $pdf->Image('@' . $codigo_barras, 15, 240, 180, 30, 'PNG', '', '', true, 150, '', false, false, 0, false, false, false);
+    }
 
     $diretorio_pdf = __DIR__ . '/notas_fiscais/';
     if (!is_dir($diretorio_pdf)) {
