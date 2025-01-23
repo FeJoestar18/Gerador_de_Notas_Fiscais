@@ -22,8 +22,7 @@ describe('template spec', () => {
       cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
       
       cy.get('#nome_empresa').type(nomeEmpresa);
-      cy.get('#cep').type(cepAleatorio).click();  
-      cy.wait(2000);
+      cy.get('#cep').type(cepAleatorio).click(); 
       cy.get('#cnpj').type(CNPJ);
       cy.get('#nome_cliente').type(nomeCliente);
       cy.get('#cpf').type(CPF);
