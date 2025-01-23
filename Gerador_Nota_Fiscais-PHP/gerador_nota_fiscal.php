@@ -111,57 +111,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $nota_fiscal = "
-<h2>Nota Fiscal</h2>
-<table>
-    <tr><th>Empresa</th><td>$nome_empresa</td></tr>
-    <tr><th>CEP</th><td>$cep</td></tr>
-    <tr><th>Logradouro</th><td>$logradouro</td></tr>
-    <tr><th>Número</th><td>$numero</td></tr>
-    <tr><th>Endereço</th><td>$endereco</td></tr>
-    <tr><th>Bairro</th><td>$bairro</td></tr>
-    <tr><th>Cidade</th><td>$cidade</td></tr>
-    <tr><th>Estado</th><td>$estado</td></tr>
-    <tr><th>CNPJ</th><td>$cnpj</td></tr>
-    <tr><th>CPF</th><td>$cpf</td></tr>
-    <tr><th>Telefone</th><td>$telefone</td></tr>
-    <tr><th>Inscrição Estadual</th><td>$ie</td></tr>
+<div class='nota-fiscal'>
+    <header>
+        <h1>Nota Fiscal</h1>
+        <div class='empresa'>
+            <h2>$nome_empresa</h2>
+            <p>CEP: $cep</p>
+            <p>$logradouro, $numero - $bairro</p>
+            <p>$cidade - $estado</p>
+            <p>CNPJ: $cnpj | CPF: $cpf</p>
+            <p>IE: $ie | Telefone: $telefone</p>
+        </div>
+    </header>
 
-    <h2>Tomador de Serviços</h2>
-    <tr><th>Cliente</th><td>$nome_cliente</td></tr>
-    <tr><th>CPF/CNPJ</th><td>$cpf_ou_cnpj</td></tr>
-    <tr><th>CEP Cliente</th><td>$cep_cliente</td></tr>
-    <tr><th>Logradouro Cliente</th><td>$logradouro_cliente</td></tr>
-    <tr><th>Número Cliente</th><td>$numero_cliente</td></tr>
-    <tr><th>Endereço Cliente</th><td>$endereco_cliente</td></tr>
-    <tr><th>Bairro Cliente</th><td>$bairro_cliente</td></tr>
-    <tr><th>Cidade Cliente</th><td>$cidade_cliente</td></tr>
-    <tr><th>Estado Cliente</th><td>$estado_cliente</td></tr>
-    <tr><th>Valor Total</th><td>R$ " . number_format($valor_total, 2, ',', '.') . "</td></tr>
+    <section class='tomador'>
+        <h2>Tomador de Serviços</h2>
+        <div class='cliente'>
+            <p>$nome_cliente</p>
+            <p>CPF: $cpf_cliente </p>
+            <p>$cep_cliente - $logradouro_cliente, $numero_cliente</p>
+            <p>$bairro_cliente - $cidade_cliente/$estado_cliente</p>
+        </div>
+        <p class='valor-total'>Valor Total: R$ " . number_format($valor_total, 2, ',', '.') . "</p>
+    </section>
 
-    <h2>Dados do Serviço Prestado</h2>
-    <tr><th>Descrição do Serviço</th><td>$descricao_servico</td></tr>
-    <tr><th>Código do Serviço</th><td>$codigo_servico</td></tr>
-    <tr><th>Valor do Serviço</th><td>$valor_servico</td></tr>
-    <tr><th>Aliquota ISS</th><td>$aliquota_iss</td></tr>
-    <tr><th>Valor do ISS</th><td>$valor_iss</td></tr>
-    <tr><th>Base do Cálculo</th><td>$base_calculo</td></tr>
+    <section class='servico'>
+        <h2>Dados do Serviço Prestado</h2>
+        <div class='detalhes-servico'>
+            <p>Descrição do Serviço: $descricao_servico</p>
+            <p>Código do Serviço: $codigo_servico</p>
+            <p>Valor do Serviço: R$ " . number_format($valor_servico, 2, ',', '.') . "</p>
+            <p>Alíquota ISS: $aliquota_iss</p>
+            <p>Valor do ISS: R$ " . number_format($valor_iss, 2, ',', '.') . "</p>
+            <p>Base de Cálculo: R$ " . number_format($base_calculo, 2, ',', '.') . "</p>
+        </div>
+    </section>
 
-    <h2>Informações Fiscais e Tributárias</h2>
-    <tr><th>Natureza da Operação</th><td>$natureza_operacao</td></tr>
-    <tr><th>Regime Especial de Tributação</th><td>$regime_tributacao</td></tr>
-    <tr><th>Optante pelo Simples Nacional</th><td>$optante_simples</td></tr>
-    <tr><th>ISS Retido</th><td>$iss_retido</td></tr>
-    <tr><th>Responsável pelo Recolhimento do ISS</th><td>$responsavel_iss</td></tr>
+    <section class='fiscal'>
+        <h2>Informações Fiscais e Tributárias</h2>
+        <div class='info-fiscal'>
+            <p>Natureza da Operação: $natureza_operacao</p>
+            <p>Regime Especial de Tributação: $regime_tributacao</p>
+            <p>Optante pelo Simples Nacional: $optante_simples</p>
+            <p>ISS Retido: $iss_retido</p>
+            <p>Responsável pelo Recolhimento do ISS: $responsavel_iss</p>
+        </div>
+    </section>
 
-    <h2>Outras Retenções</h2>
-    <tr><th>Data de Emissão</th><td>$data_emissao</td></tr>
-    <tr><th>Número da Nota Fiscal</th><td>$numero_nf</td></tr>
-    <tr><th>Série</th><td>$serie</td></tr>
-    <tr><th>Código de Verificação</th><td>$codigo_verificacao</td></tr>
+    <section class='outras'>
+        <h2>Outras Informações</h2>
+        <div class='info-outras'>
+            <p>Data de Emissão: $data_emissao</p>
+            <p>Número da Nota Fiscal: $numero_nf</p>
+            <p>Série: $serie</p>
+            <p>Código de Verificação: $codigo_verificacao</p>
+            <p>Outras Retenções: $outras_retencoes</p>
+        </div>
+    </section>
+</div>
 
-    <h2>Outras Incidências</h2>
-    <tr><th>Outras Retenções</th><td>$outras_retencoes</td></tr>
-</table>
+<style>
+    .nota-fiscal {
+        font-family: Arial, sans-serif;
+        border: 1px solid #ccc;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .nota-fiscal h1, .nota-fiscal h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .nota-fiscal .empresa, .nota-fiscal .cliente, .nota-fiscal .detalhes-servico, .nota-fiscal .info-fiscal, .nota-fiscal .info-outras {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .nota-fiscal .valor-total {
+        text-align: right;
+        font-weight: bold;
+    }
+</style>
 ";
 
     require_once __DIR__ . '/vendor/autoload.php';
@@ -194,5 +227,5 @@ $nota_fiscal = "
                 window.location.href = 'formulario_nota_fiscal.php'; 
             }, 3000); 
           </script>";
-}
+
 ?>

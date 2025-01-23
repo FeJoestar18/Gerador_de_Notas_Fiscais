@@ -56,23 +56,9 @@
         <label for="nome_cliente">Nome do Cliente:</label>
         <input type="text" id="nome_cliente" name="nome_cliente" required><br>
 
-        <label for="cpf_ou_cnpj">CPF ou CNPJ</label>
-        <select name="cpf_ou_cnpj" id="cpf_ou_cnpj" required onchange="mostrarCampo()">
-            <option value="">Escolha</option>
-            <option value="CPF" <?php if (isset($_POST['cpf_ou_cnpj']) && $_POST['cpf_ou_cnpj'] == 'CPF') echo 'selected'; ?>>CPF</option>
-            <option value="CNPJ" <?php if (isset($_POST['cpf_ou_cnpj']) && $_POST['cpf_ou_cnpj'] == 'CNPJ') echo 'selected'; ?>>CNPJ</option>
-        </select>
+        <label for="cpf_cliente">CPF</label>
+        <input type="text" id ="cpf_cliente" name="cpf_cliente" maxlength="14" required><br>
 
-        <div id="campoCpf" style="display: none;">
-            <label for="cpf_cliente">Digite o CPF</label>
-            <input type="text" id="cpf_cliente" name="cpf_cliente" value="<?php echo isset($_POST['cpf']) ? $_POST['cpf'] : ''; ?>" />
-        </div>
-        
-        <div id="campoCnpj" style="display: none;">
-            <label for="cnpj_cliente">Digite o CNPJ</label>
-            <input type="text" id="cnpj_cliente" name="cnpj_cliente" value="<?php echo isset($_POST['cnpj']) ? $_POST['cnpj'] : ''; ?>" />
-        </div>
-        
         <label for="cep_cliente">CEP:</label>
         <input type="text" id="cep_cliente" name="cep_cliente" maxlength="9" onblur="buscarEnderecoCliente()" required><br> 
 
