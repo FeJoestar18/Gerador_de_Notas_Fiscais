@@ -1,8 +1,8 @@
 # # Ignorar tudo dentro de notas_fiscais
-# notas_fiscais/*
+notas_fiscais/*
 
 # # Exceto a própria pasta
-# !notas_fiscais/.gitkeep
+!notas_fiscais/.gitkeep
 
 # Ignorar a pasta vendor e seus conteúdos
 vendor/
