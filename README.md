@@ -23,10 +23,8 @@
 
 Abra o terminal e execute o comando:
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/FeJoestar18/Gerador_de_Notas_Fiscais.git
 ```
-Substitua `<URL_DO_REPOSITORIO>` pelo link do repositório Git.
-
 ### 2. Mover os Arquivos
 
 - Se estiver usando **XAMPP**:
