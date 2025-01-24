@@ -11,7 +11,7 @@ import { gerarDataEmissao, gerarSerie, gerarCodigoVerificacao } from '../support
 import gerarOutrasRetencoes from '../support/outrasIncidencias';
 
 describe('template spec', () => {
-  const quantidadeDeTestes = 10; 
+  const quantidadeDeTestes = 20; 
 
   it('Executa o teste em looping', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
@@ -72,7 +72,7 @@ describe('template spec', () => {
           cy.get('#cpf_cliente').type(cpfValido);
           cy.get('#cep_cliente').type(cepAleatorioCliente).should('be.visible');
           // cy.wait(5000);
-          cy.get('#logradouro_cliente').should('be.visible').click();
+          // cy.get('#logradouro_cliente').should('be.visible').click();
           cy.get('#numero_cliente').type(NumeroAleatorio_cep.toString());
 
           // dados do serviço
