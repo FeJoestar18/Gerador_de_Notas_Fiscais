@@ -23,8 +23,10 @@
 
 Abra o terminal e execute o comando:
 ```bash
-git clone https://github.com/FeJoestar18/Gerador_de_Notas_Fiscais.git
+git clone <URL_DO_REPOSITORIO>
 ```
+Substitua `<URL_DO_REPOSITORIO>` pelo link do repositório Git.
+
 ### 2. Mover os Arquivos
 
 - Se estiver usando **XAMPP**:
@@ -42,7 +44,16 @@ Isso instalará as dependências definidas no arquivo `composer.json`, como:
 - `tecnickcom/tcpdf`
 - `picqer/php-barcode-generator`
 
-### 4. Instalar Dependências JavaScript
+### 4. Criar a Pasta `notas_fiscais`
+
+Navegue até a pasta do projeto e crie a pasta `notas_fiscais` dentro da pasta `Gerador_Nota_Fiscais-PHP`.
+
+Se estiver usando o terminal no Windows, execute:
+```bash
+mkdir notas_fiscais
+```
+
+### 5. Instalar Dependências JavaScript
 
 Execute o comando para instalar as dependências do arquivo `package.json`:
 ```bash
@@ -53,7 +64,7 @@ Isso instalará pacotes como:
 - `cypress`
 - `lodash`
 
-### 5. Configurar o Banco de Dados
+### 6. Configurar o Banco de Dados
 
 1. Acesse o phpMyAdmin pelo navegador:
    - **XAMPP:** [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
@@ -71,12 +82,12 @@ Isso instalará pacotes como:
 
 4. Importe o arquivo SQL, se houver, para configurar as tabelas e dados iniciais.
 
-### 6. Ligar o Servidor Local
+### 7. Ligar o Servidor Local
 
 1. Abra o painel do XAMPP ou WAMP.
 2. Inicie os serviços de **Apache** e **MySQL**.
 
-### 7. Acessar o Projeto
+### 8. Acessar o Projeto
 
 No navegador, digite o seguinte:
 - **XAMPP:** [http://localhost/pasta-do-projeto](http://localhost/pasta-do-projeto)
@@ -105,4 +116,6 @@ Substitua `pasta-do-projeto` pelo nome da pasta onde colocou os arquivos.
    - Certifique-se de que o servidor local tem permissão para acessar a pasta do projeto.
 
 Agora o projeto está pronto para ser usado!
+
+
 
