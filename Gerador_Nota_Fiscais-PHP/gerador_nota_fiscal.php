@@ -45,6 +45,8 @@ function validarCPF($cpf) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Dados do Prestador de Serviços
     $nome_empresa = $_POST['nome_empresa'];
     $cep = $_POST['cep'];
     $logradouro = $_POST['logradouro'];
@@ -60,18 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Dados do Tomador de Serviços
     $nome_cliente = $_POST['nome_cliente'];
-    $cpf_cliente = $_POST['cpf'];
+    $cpf_cliente = $_POST['cpf_cliente'];
     $cnpj_cliente = $_POST['cnpj'];
-    $cep_cliente = $_POST['cep'];
-    $logradouro_cliente = $_POST['logradouro'];
-    $numero_cliente = $_POST['numero'];
-    $endereco_cliente = $_POST['endereco'];
-    $bairro_cliente = $_POST['bairro'];
-    $cidade_cliente = $_POST['cidade'];
-    $estado_cliente = $_POST['estado'];
-    $valor_total = $_POST['valor_total'];
+    $cep_cliente = $_POST['cep_cliente'];
+    $logradouro_cliente = $_POST['logradouro_cliente'];
+    $numero_cliente = $_POST['numero_cliente'];
+    $endereco_cliente = $_POST['endereco_cliente'];
+    $bairro_cliente = $_POST['bairro_cliente'];
+    $cidade_cliente = $_POST['cidade_cliente'];
+    $estado_cliente = $_POST['estado_cliente'];
 
-    // Dados do Serviço do Serviço prestado
+    // Dados do Serviço Prestado
     $descricao_servico = $_POST['descricao_servico'];
     $codigo_servico = $_POST['codigo_servico'];
     $valor_servico = $_POST['valor_servico'];
@@ -79,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $valor_iss = $_POST['valor_iss'];
     $base_calculo = $_POST['base_calculo'];
 
-    // Informaçoes fiscais e Tributarias
+    // Informações Fiscais e Tributárias
     $natureza_operacao = $_POST['natureza_operacao'];
     $regime_tributacao = $_POST['regime_tributacao'];
     $optante_simples = $_POST['optante_simples'];
@@ -94,10 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Outras Incidências
     $outras_retencoes = $_POST['outras_retencoes'];
-    
+
     // Formas de Pagamento
     $formato_saida = $_POST['formato_saida'];
     $forma_pagamento = $_POST['forma_pagamento'];
+    $valor_total = $_POST['valor_total'];
 
     if (!validarCNPJ($cnpj)) {
         echo "<script>alert('CNPJ inválido!'); window.history.back();</script>";
@@ -108,7 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>alert('CPF inválido!'); window.history.back();</script>";
         exit;
     }
+
 }
+
 
 $nota_fiscal = "
 <div class='nota-fiscal'>
