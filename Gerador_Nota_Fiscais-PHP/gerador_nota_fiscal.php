@@ -2,6 +2,7 @@
 include('conexao.php');
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
+// Funções de Validação de CNPJ e CPF
 function validarCNPJ($cnpj) {
     $cnpj = preg_replace('/\D/', '', $cnpj);
     if (strlen($cnpj) != 14 || preg_match('/(\d)\1{13}/', $cnpj)) {
@@ -44,159 +45,205 @@ function validarCPF($cpf) {
     return ($cpf[9] == $digito1 && $cpf[10] == $digito2);
 }
 
+// Verifica se o método da requisição é POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Dados do Prestador de Serviços
-    $nome_empresa = $_POST['nome_empresa'];
-    $cep = $_POST['cep'];
-    $logradouro = $_POST['logradouro'];
-    $numero = $_POST['numero'];
-    $endereco = $_POST['endereco'];
-    $bairro = $_POST['bairro'];
-    $cidade = $_POST['cidade'];
-    $estado = $_POST['estado'];
-    $cnpj = $_POST['cnpj'];
-    $cpf = $_POST['cpf'];
-    $telefone = $_POST['telefone'];
-    $ie = $_POST['ie'];
+    $nome_empresa = isset($_POST['nome_empresa']) ? $_POST['nome_empresa'] : '';
+    $cep = isset($_POST['cep']) ? $_POST['cep'] : '';
+    $logradouro = isset($_POST['logradouro']) ? $_POST['logradouro'] : '';
+    $numero = isset($_POST['numero']) ? $_POST['numero'] : '';
+    $bairro = isset($_POST['bairro']) ? $_POST['bairro'] : '';
+    $cidade = isset($_POST['cidade']) ? $_POST['cidade'] : '';
+    $estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+    $cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : '';
+    $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : '';
+    $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : '';
+    $ie = isset($_POST['ie']) ? $_POST['ie'] : '';
 
     // Dados do Tomador de Serviços
-    $nome_cliente = $_POST['nome_cliente'];
-    $cpf_cliente = $_POST['cpf_cliente'];
-    $cnpj_cliente = $_POST['cnpj'];
-    $cep_cliente = $_POST['cep_cliente'];
-    $logradouro_cliente = $_POST['logradouro_cliente'];
-    $numero_cliente = $_POST['numero_cliente'];
-    $endereco_cliente = $_POST['endereco_cliente'];
-    $bairro_cliente = $_POST['bairro_cliente'];
-    $cidade_cliente = $_POST['cidade_cliente'];
-    $estado_cliente = $_POST['estado_cliente'];
+    $nome_cliente = isset($_POST['nome_cliente']) ? $_POST['nome_cliente'] : '';
+    $cpf_cliente = isset($_POST['cpf_cliente']) ? $_POST['cpf_cliente'] : '';
+    $cnpj_cliente = isset($_POST['cnpj_cliente']) ? $_POST['cnpj_cliente'] : '';
+    $cep_cliente = isset($_POST['cep_cliente']) ? $_POST['cep_cliente'] : '';
+    $logradouro_cliente = isset($_POST['logradouro_cliente']) ? $_POST['logradouro_cliente'] : '';
+    $numero_cliente = isset($_POST['numero_cliente']) ? $_POST['numero_cliente'] : '';
+    $bairro_cliente = isset($_POST['bairro_cliente']) ? $_POST['bairro_cliente'] : '';
+    $cidade_cliente = isset($_POST['cidade_cliente']) ? $_POST['cidade_cliente'] : '';
+    $estado_cliente = isset($_POST['estado_cliente']) ? $_POST['estado_cliente'] : '';
 
     // Dados do Serviço Prestado
-    $descricao_servico = $_POST['descricao_servico'];
-    $codigo_servico = $_POST['codigo_servico'];
-    $valor_servico = $_POST['valor_servico'];
-    $aliquota_iss = $_POST['aliquota_iss'];
-    $valor_iss = $_POST['valor_iss'];
-    $base_calculo = $_POST['base_calculo'];
+    $descricao_servico = isset($_POST['descricao_servico']) ? $_POST['descricao_servico'] : '';
+    $codigo_servico = isset($_POST['codigo_servico']) ? $_POST['codigo_servico'] : '';
+    $valor_servico = isset($_POST['valor_servico']) ? $_POST['valor_servico'] : '';
+    $aliquota_iss = isset($_POST['aliquota_iss']) ? $_POST['aliquota_iss'] : '';
+    $valor_iss = isset($_POST['valor_iss']) ? $_POST['valor_iss'] : '';
+    $base_calculo = isset($_POST['base_calculo']) ? $_POST['base_calculo'] : '';
 
     // Informações Fiscais e Tributárias
-    $natureza_operacao = $_POST['natureza_operacao'];
-    $regime_tributacao = $_POST['regime_tributacao'];
-    $optante_simples = $_POST['optante_simples'];
-    $iss_retido = $_POST['iss_retido'];
-    $responsavel_iss = $_POST['responsavel_iss'];
+    $natureza_operacao = isset($_POST['natureza_operacao']) ? $_POST['natureza_operacao'] : '';
+    $regime_tributacao = isset($_POST['regime_tributacao']) ? $_POST['regime_tributacao'] : '';
+    $optante_simples = isset($_POST['optante_simples']) ? $_POST['optante_simples'] : '';
+    $iss_retido = isset($_POST['iss_retido']) ? $_POST['iss_retido'] : '';
+    $responsavel_iss = isset($_POST['responsavel_iss']) ? $_POST['responsavel_iss'] : '';
 
     // Outras Informações
-    $data_emissao = $_POST['data_emissao'];
-    $numero_nf = $_POST['numero_nf'];
-    $serie = $_POST['serie'];
-    $codigo_verificacao = $_POST['codigo_verificacao'];
+    $data_emissao = isset($_POST['data_emissao']) ? $_POST['data_emissao'] : '';
+    $numero_nf = isset($_POST['numero_nf']) ? $_POST['numero_nf'] : '';
+    $serie = isset($_POST['serie']) ? $_POST['serie'] : '';
+    $codigo_verificacao = isset($_POST['codigo_verificacao']) ? $_POST['codigo_verificacao'] : '';
 
     // Outras Incidências
-    $outras_retencoes = $_POST['outras_retencoes'];
+    $outras_retencoes = isset($_POST['outras_retencoes']) ? $_POST['outras_retencoes'] : '';
 
     // Formas de Pagamento
-    $formato_saida = $_POST['formato_saida'];
-    $forma_pagamento = $_POST['forma_pagamento'];
-    $valor_total = $_POST['valor_total'];
+    $formato_saida = isset($_POST['formato_saida']) ? $_POST['formato_saida'] : '';
+    $forma_pagamento = isset($_POST['forma_pagamento']) ? $_POST['forma_pagamento'] : '';
+    $valor_total = isset($_POST['valor_total']) ? $_POST['valor_total'] : '';
 
+    // Validação do CNPJ
     if (!validarCNPJ($cnpj)) {
-        echo "<script>alert('CNPJ inválido!'); window.history.back();</script>";
+        echo "<script>alert('CNPJ inválido');</script>";
         exit;
     }
 
+    // Validação do CPF
     if (!validarCPF($cpf)) {
-        echo "<script>alert('CPF inválido!'); window.history.back();</script>";
+        echo "<script>alert('CPF inválido');</script>";
         exit;
     }
-
-}
-
 
 $nota_fiscal = "
 <div class='nota-fiscal'>
-    <header>
-        <h1>Nota Fiscal</h1>
-        <div class='empresa'>
-            <h2>$nome_empresa</h2>
-            <p>CEP: $cep</p>
-            <p>$logradouro, $numero - $bairro</p>
-            <p>$cidade - $estado</p>
-            <p>CNPJ: $cnpj | CPF: $cpf</p>
-            <p>IE: $ie | Telefone: $telefone</p>
+    <header class='header'>
+        <div class='logo'>
+            <img src='logo.png' alt='Logo'>
+        </div>
+        <div class='informacoes'>
+            <h1>NOTA FISCAL ELETRÔNICA DE SERVIÇOS</h1>
+            <p><strong>Prefeitura do Município de São Paulo</strong></p>
+            <p>Secretaria Municipal de Finanças</p>
+            <p>Data e Hora de Emissão: $data_emissao</p>
+            <p>Número da Nota: $numero_nf</p>
+            <p>Código de Verificação: $codigo_verificacao</p>
         </div>
     </header>
 
+    <section class='prestador'>
+        <h2>Prestador de Serviços</h2>
+        <p><strong>Nome/Razão Social:</strong> $nome_empresa</p>
+        <p><strong>CNPJ:</strong> $cnpj</p>
+        <p><strong>Endereço:</strong> $logradouro, $numero - $bairro</p>
+        <p><strong>Cidade/Estado:</strong> $cidade/$estado</p>
+        <p><strong>CEP:</strong> $cep</p>
+        <p><strong>Telefone:</strong> $telefone</p>
+    </section>
+
     <section class='tomador'>
         <h2>Tomador de Serviços</h2>
-        <div class='cliente'>
-            <p>$nome_cliente</p>
-            <p>CPF: $cpf_cliente </p>
-            <p>$cep_cliente - $logradouro_cliente, $numero_cliente</p>
-            <p>$bairro_cliente - $cidade_cliente/$estado_cliente</p>
-        </div>
-        <p class='valor-total'>Valor Total: R$ " . number_format($valor_total, 2, ',', '.') . "</p>
+        <p><strong>Nome/Razão Social:</strong> $nome_cliente</p>
+        <p><strong>CPF:</strong> $cpf_cliente</p>
+        <p><strong>Endereço:</strong> $logradouro_cliente, $numero_cliente - $bairro_cliente</p>
+        <p><strong>Cidade/Estado:</strong> $cidade_cliente/$estado_cliente</p>
+        <p><strong>CEP:</strong> $cep_cliente</p>
     </section>
 
-    <section class='servico'>
-        <h2>Dados do Serviço Prestado</h2>
-        <div class='detalhes-servico'>
-            <p>Descrição do Serviço: $descricao_servico</p>
-            <p>Código do Serviço: $codigo_servico</p>
-            <p>Valor do Serviço: R$ " . number_format($valor_servico, 2, ',', '.') . "</p>
-            <p>Alíquota ISS: $aliquota_iss</p>
-            <p>Valor do ISS: R$ " . number_format($valor_iss, 2, ',', '.') . "</p>
-            <p>Base de Cálculo: R$ " . number_format($base_calculo, 2, ',', '.') . "</p>
-        </div>
+    <section class='detalhes'>
+        <h2>Detalhes do Serviço Prestado</h2>
+        <p><strong>Descrição do Serviço:</strong> $descricao_servico</p>
+        <p><strong>Código do Serviço:</strong> $codigo_servico</p>
+        <p><strong>Valor do Serviço:</strong> R$ " . number_format($valor_servico, 2, ',', '.') . "</p>
+        <p><strong>Alíquota ISS:</strong> $aliquota_iss</p>
+        <p><strong>Valor do ISS:</strong> R$ " . number_format($valor_iss, 2, ',', '.') . "</p>
+        <p><strong>Base de Cálculo:</strong> R$ " . number_format($base_calculo, 2, ',', '.') . "</p>
     </section>
 
-    <section class='fiscal'>
+    <section class='informacoes-fiscais'>
         <h2>Informações Fiscais e Tributárias</h2>
-        <div class='info-fiscal'>
-            <p>Natureza da Operação: $natureza_operacao</p>
-            <p>Regime Especial de Tributação: $regime_tributacao</p>
-            <p>Optante pelo Simples Nacional: $optante_simples</p>
-            <p>ISS Retido: $iss_retido</p>
-            <p>Responsável pelo Recolhimento do ISS: $responsavel_iss</p>
-        </div>
+        <p><strong>Natureza da Operação:</strong> $natureza_operacao</p>
+        <p><strong>Regime Especial de Tributação:</strong> $regime_tributacao</p>
+        <p><strong>Optante pelo Simples Nacional:</strong> $optante_simples</p>
+        <p><strong>ISS Retido:</strong> $iss_retido</p>
+        <p><strong>Responsável pelo Recolhimento do ISS:</strong> $responsavel_iss</p>
     </section>
 
-    <section class='outras'>
+    <section class='outras-informacoes'>
         <h2>Outras Informações</h2>
-        <div class='info-outras'>
-            <p>Data de Emissão: $data_emissao</p>
-            <p>Número da Nota Fiscal: $numero_nf</p>
-            <p>Série: $serie</p>
-            <p>Código de Verificação: $codigo_verificacao</p>
-            <p>Outras Retenções: $outras_retencoes</p>
-        </div>
+        <p><strong>Série:</strong> $serie</p>
+        <p><strong>Outras Retenções:</strong> $outras_retencoes</p>
     </section>
+
+    <footer>
+        <p>Este é um documento gerado eletronicamente e não precisa de assinatura.</p>
+    </footer>
 </div>
 
 <style>
     .nota-fiscal {
         font-family: Arial, sans-serif;
-        border: 1px solid #ccc;
+        border: 1px solid #000;
         padding: 20px;
-        max-width: 800px;
-        margin: 0 auto;
+        width: 90%;
+        margin: 20px auto;
+        background-color: #fff;
     }
 
-    .nota-fiscal h1, .nota-fiscal h2 {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .informacoes {
+        text-align: right;
+    }
+
+    .nota-fiscal h1 {
         text-align: center;
-        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: bold;
     }
 
-    .nota-fiscal .empresa, .nota-fiscal .cliente, .nota-fiscal .detalhes-servico, .nota-fiscal .info-fiscal, .nota-fiscal .info-outras {
-        border: 1px solid #ccc;
-        padding: 10px;
+    .nota-fiscal h2 {
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .nota-fiscal p {
+        font-size: 14px;
+        margin: 5px 0;
+    }
+
+    .nota-fiscal section {
         margin-bottom: 20px;
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .nota-fiscal section h2 {
+        margin-top: 0;
+    }
+
+    .nota-fiscal footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 12px;
     }
 
     .nota-fiscal .valor-total {
-        text-align: right;
+        font-size: 16px;
         font-weight: bold;
+        text-align: right;
     }
 </style>
 ";
@@ -231,5 +278,5 @@ $nota_fiscal = "
                 window.location.href = 'formulario_nota_fiscal.php'; 
             }, 3000); 
           </script>";
-
+        }
 ?>

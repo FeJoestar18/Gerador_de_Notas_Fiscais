@@ -1,5 +1,3 @@
-// cypress/support/generateRandomCPF.js
-
 function generateRandomCPF() {
   let n = 10;
   let n1 = Math.floor(Math.random() * n);
