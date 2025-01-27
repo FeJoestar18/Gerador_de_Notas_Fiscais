@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .header-notice {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .details-table th, .details-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .provider, .client {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .description-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .description-table th, .description-table td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+        .footer {
+            font-size: 0.9em;
+            color: gray;
+            margin-top: 30px;
+        }
+        @media print {
+            body {
+                width: 100%;
+                margin: 0;
+            }
+            .container {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NFS-e - Nota Fiscal de Serviço Eletrônica</h1>
+        <div class="header-notice">PREFEITURA DE TESTE (Sem valor fiscal ou contábil)</div>
+        <table class="details-table">
+            <tr>
+                <th>Emitida em</th>
+                <th>Competência</th>
+                <th>Número</th>
+                <th>Cód. Verificação</th>
+            </tr>
+            <tr>
+                <td>22/11/2021 12:40:23</td>
+                <td>22/11/2021 12:40:23</td>
+                <td>00000000</td>
+                <td>025830426104432</td>
+            </tr>
+        </table>
+        <div class="provider">
+            <div class="bold">Wayne Enterprises Inc</div>
+            <div>CNPJ: 34.785.515/0001-66</div>
+            <div>Av Beira Mar, 3000 - Centro - CEP: 88015-710</div>
+            <div>Florianópolis, SC</div>
+            <div>Inscrição Municipal: <span class="bold">123456</span></div>
+        </div>
+        <div class="client">
+            <div class="bold">Tomador dos Serviços</div>
+            <div>CPF/CNPJ: <span class="bold">292.473.210-77</span></div>
+            <div>Joao Silva</div>
+            <div>Av Beira Mar, 3000 - Centro - CEP: 88117-000</div>
+            <div>Florianópolis, SC</div>
+            <div>Inscrição Municipal: Não Informado</div>
+        </div>
+        <table class="description-table">
+            <tr>
+                <th>Descrição do Serviço</th>
+            </tr>
+            <tr>
+                <td>CONFORME LEI 12.741/2012 o valor aproximado dos tributos é R$ 24,35 (16,23%)</td>
+            </tr>
+            <tr>
+                <th>Código do Serviço</th>
+                <th>Serviço prestado</th>
+            </tr>
+            <tr>
+                <td>8.02</td>
+                <td>Serviço prestado</td>
+            </tr>
+        </table>
+        <div class="footer">
+            <p>Informações adicionais ou termos podem ser colocados aqui.</p>
+        </div>
+    </div>
+</body>
+</html>

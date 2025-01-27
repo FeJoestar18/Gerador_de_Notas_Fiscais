@@ -113,140 +113,193 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-$nota_fiscal = "
-<div class='nota-fiscal'>
-    <header class='header'>
-        <div class='logo'>
-            <img src='logo.png' alt='Logo'>
-        </div>
-        <div class='informacoes'>
-            <h1>NOTA FISCAL ELETRÔNICA DE SERVIÇOS</h1>
-            <p><strong>Prefeitura do Município de São Paulo</strong></p>
-            <p>Secretaria Municipal de Finanças</p>
-            <p>Data e Hora de Emissão: $data_emissao</p>
-            <p>Número da Nota: $numero_nf</p>
-            <p>Código de Verificação: $codigo_verificacao</p>
-        </div>
-    </header>
-
-    <section class='prestador'>
-        <h2>Prestador de Serviços</h2>
-        <p><strong>Nome/Razão Social:</strong> $nome_empresa</p>
-        <p><strong>CNPJ:</strong> $cnpj</p>
-        <p><strong>Endereço:</strong> $logradouro, $numero - $bairro</p>
-        <p><strong>Cidade/Estado:</strong> $cidade/$estado</p>
-        <p><strong>CEP:</strong> $cep</p>
-        <p><strong>Telefone:</strong> $telefone</p>
-    </section>
-
-    <section class='tomador'>
-        <h2>Tomador de Serviços</h2>
-        <p><strong>Nome/Razão Social:</strong> $nome_cliente</p>
-        <p><strong>CPF:</strong> $cpf_cliente</p>
-        <p><strong>Endereço:</strong> $logradouro_cliente, $numero_cliente - $bairro_cliente</p>
-        <p><strong>Cidade/Estado:</strong> $cidade_cliente/$estado_cliente</p>
-        <p><strong>CEP:</strong> $cep_cliente</p>
-    </section>
-
-    <section class='detalhes'>
-        <h2>Detalhes do Serviço Prestado</h2>
-        <p><strong>Descrição do Serviço:</strong> $descricao_servico</p>
-        <p><strong>Código do Serviço:</strong> $codigo_servico</p>
-        <p><strong>Valor do Serviço:</strong> R$ " . number_format($valor_servico, 2, ',', '.') . "</p>
-        <p><strong>Alíquota ISS:</strong> $aliquota_iss</p>
-        <p><strong>Valor do ISS:</strong> R$ " . number_format($valor_iss, 2, ',', '.') . "</p>
-        <p><strong>Base de Cálculo:</strong> R$ " . number_format($base_calculo, 2, ',', '.') . "</p>
-    </section>
-
-    <section class='informacoes-fiscais'>
-        <h2>Informações Fiscais e Tributárias</h2>
-        <p><strong>Natureza da Operação:</strong> $natureza_operacao</p>
-        <p><strong>Regime Especial de Tributação:</strong> $regime_tributacao</p>
-        <p><strong>Optante pelo Simples Nacional:</strong> $optante_simples</p>
-        <p><strong>ISS Retido:</strong> $iss_retido</p>
-        <p><strong>Responsável pelo Recolhimento do ISS:</strong> $responsavel_iss</p>
-    </section>
-
-    <section class='outras-informacoes'>
-        <h2>Outras Informações</h2>
-        <p><strong>Série:</strong> $serie</p>
-        <p><strong>Outras Retenções:</strong> $outras_retencoes</p>
-    </section>
-
-    <footer>
-        <p>Este é um documento gerado eletronicamente e não precisa de assinatura.</p>
-    </footer>
-</div>
-
-<style>
-    .nota-fiscal {
+    $nota_fiscal = '
+   <style>
+    body {
         font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .container {
+        width: 100%;
+        max-width: 750px; 
+        margin: 0 auto;
         border: 1px solid #000;
-        padding: 20px;
-        width: 90%;
-        margin: 20px auto;
-        background-color: #fff;
+        padding: 5px;
     }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #000;
-        padding-bottom: 10px;
-    }
-
-    .logo img {
-        width: 100px;
-    }
-
-    .informacoes {
-        text-align: right;
-    }
-
-    .nota-fiscal h1 {
+    h1 {
         text-align: center;
-        font-size: 22px;
-        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 8px;
     }
-
-    .nota-fiscal h2 {
-        font-size: 18px;
-        margin-top: 20px;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    .nota-fiscal p {
-        font-size: 14px;
-        margin: 5px 0;
-    }
-
-    .nota-fiscal section {
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        padding: 15px;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-    }
-
-    .nota-fiscal section h2 {
-        margin-top: 0;
-    }
-
-    .nota-fiscal footer {
+    .header-notice {
         text-align: center;
-        margin-top: 20px;
-        font-size: 12px;
-    }
-
-    .nota-fiscal .valor-total {
-        font-size: 16px;
+        color: red;
         font-weight: bold;
-        text-align: right;
+        margin-bottom: 15px;
+    }
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 8px;
+    }
+    .details-table th, .details-table td {
+        border: 1px solid #000;
+        padding: 5px;
+        text-align: left;
+        font-size: 0.8em;
+    .provider, .client {
+        border: 1px solid #000;
+        padding: 6px;
+        margin-bottom: 8px;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .description-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+    }
+    .description-table th, .description-table td {
+        border: 1px solid #000;
+        padding: 5px;
+        font-size: 0.8em;
+    }
+    .footer {
+        font-size: 0.7em;
+        color: gray;
+        margin-top: 15px;
+        padding-top: 6px;
+        border-top: 1px solid #000;
+    }
+    .footer p {
+        margin: 3px 0;
+    }
+    @media print {
+        body {
+            width: 100%;
+            margin: 0;
+            height: auto;
+        }
+        .container {
+            width: 100%;
+            margin: 0;
+            padding: 5px;
+        }
+        .details-table, .description-table {
+            width: 100%;
+        }
     }
 </style>
-";
+
+
+<div class="nota-fiscal">
+    <div class="container">
+        <h1>NFS-e - Nota Fiscal de Serviço Eletrônica</h1>
+        <div class="header-notice"> </div>
+
+        <table class="details-table">
+            <tr>
+                <th>Emitida em</th>
+                <th>Número</th>
+                <th>Cód. Verificação</th>
+            </tr>
+            <tr>
+                <td>' . $data_emissao . '</td>
+                <td>' . $numero_nf . '</td>
+                <td>' . $codigo_verificacao . '</td>
+            </tr>
+        </table>
+
+        <div class="provider">
+            <div class="bold">' . $nome_empresa . '</div>
+            <div>CNPJ: ' . $cnpj . '</div>
+            <div>' . $logradouro . ', ' . $numero . ' - ' . $bairro . ' - CEP: ' . $cep . '</div>
+            <div>' . $cidade . ', ' . $estado . '</div>
+            <div>Inscrição Municipal: <span class="bold">' . $ie . '</span></div>
+        </div>
+
+        <div class="client">
+            <div class="bold">Tomador dos Serviços</div>
+            <div>CPF/CNPJ: <span class="bold">' . (!empty($cpf_cliente) ? $cpf_cliente : $cnpj_cliente) . '</span></div>
+            <div>' . $nome_cliente . '</div>
+            <div>' . $logradouro_cliente . ', ' . $numero_cliente . ' - ' . $bairro_cliente . ' - CEP: ' . $cep_cliente . '</div>
+            <div>' . $cidade_cliente . ', ' . $estado_cliente . '</div>
+            <div>Inscrição Municipal: ' . (!empty($clienteInscricaoMunicipal) ? $clienteInscricaoMunicipal : "Não Informado") . '</div>
+        </div>
+
+        <table class="description-table">
+            <tr>
+                <th>Descrição do Serviço</th>
+            </tr>
+            <tr>
+                <td>' . $descricao_servico . '</td>
+            </tr>
+            <tr>
+                <th>Código do Serviço</th>
+                <th>Serviço prestado</th>
+            </tr>
+            <tr>
+                <td>' . $codigo_servico . '</td>
+                <td>' . $descricao_servico . '</td>
+            </tr>
+           
+        </table>
+<table class="description-table">
+    <tr>
+        <td><strong>Natureza da Operação:</strong></td>
+        <td>' . $natureza_operacao . '</td>
+    </tr>
+    <tr>
+        <td><strong>Regime de Tributação:</strong></td>
+        <td>' . $regime_tributacao . '</td>
+    </tr>
+    <tr>
+        <td><strong>Optante pelo Simples Nacional:</strong></td>
+        <td>' . ($optante_simples ? "Sim" : "Não") . '</td>
+    </tr>
+    <tr>
+        <td><strong>ISS Retido:</strong></td>
+        <td>' . ($iss_retido ? "Sim" : "Não") . '</td>
+    </tr>
+    <tr>
+        <td><strong>Responsável pelo ISS:</strong></td>
+        <td>' . $responsavel_iss . '</td>
+    </tr>
+    <tr>
+        <td><strong>Valor Total:</strong></td>
+        <td>R$ ' . $valor_total . '</td>
+    </tr>
+    <tr>
+        <td><strong>Valor do ISS:</strong></td>
+        <td>R$ ' . $valor_iss . '</td>
+    </tr>
+    <tr>
+        <td><strong>Base de Cálculo:</strong></td>
+        <td>R$ ' . $base_calculo . '</td>
+    </tr>
+    <tr>
+        <td><strong>Outras Retenções:</strong></td>
+        <td>R$ ' . $outras_retencoes . '</td>
+    </tr>
+    <tr>
+        <td><strong>Forma de Pagamento:</strong></td>
+        <td>' . $forma_pagamento . '</td>
+    </tr>
+    <tr>
+        <td colspan="2"><strong>Informações adicionais ou termos podem ser colocados aqui.</strong></td>
+    </tr>
+</table>
+    
+    </div>
+</div>
+';
+
+
+    
 
     require_once __DIR__ . '/vendor/autoload.php';
     $pdf = new TCPDF();
