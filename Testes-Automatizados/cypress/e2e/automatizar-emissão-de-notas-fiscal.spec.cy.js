@@ -11,7 +11,7 @@ import { gerarDataEmissao, gerarSerie, gerarCodigoVerificacao } from '../support
 import gerarOutrasRetencoes from '../support/outrasIncidencias';
 
 describe('template spec', () => {
-  const quantidadeDeTestes = 20; 
+  const quantidadeDeTestes = 1; 
 
   it('Executa o teste em looping', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {

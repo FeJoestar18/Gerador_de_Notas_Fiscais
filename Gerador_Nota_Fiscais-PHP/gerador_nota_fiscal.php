@@ -1,6 +1,7 @@
 <?php
 include('conexao.php');
 use Picqer\Barcode\BarcodeGeneratorPNG;
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Funções de Validação de CNPJ e CPF
 function validarCNPJ($cnpj) {
@@ -112,171 +113,126 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>alert('CPF inválido');</script>";
         exit;
     }
+ class CustomPDF extends TCPDF {
+        public function Header() {
+            $this->SetFont('helvetica', 'B', 12);
+            $this->Image('path/to/logo.png', 10, 10, 30);
+            $this->Cell(0, 15, 'NOTA FISCAL ELETRÔNICA DE SERVIÇOS', 0, 1, 'C', false, '', 1, false, 'T', 'M');
+            $this->SetFont('helvetica', '', 10);
+            $this->Cell(0, 10, 'Prefeitura do Município de São Paulo - Secretaria Municipal de Finanças', 0, 1, 'C');
+            $this->Ln(5);
+            
+        }
+    
+        public function Footer() {
+            $this->SetY(-15);
+            $this->SetFont('helvetica', 'I', 8);
+            $this->Cell(0, 10, 'Página ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages(), 0, 0, 'C');
+        }
 
-$nota_fiscal = "
-<div class='nota-fiscal'>
-    <header class='header'>
-        <div class='logo'>
-            <img src='logo.png' alt='Logo'>
-        </div>
-        <div class='informacoes'>
-            <h1>NOTA FISCAL ELETRÔNICA DE SERVIÇOS</h1>
-            <p><strong>Prefeitura do Município de São Paulo</strong></p>
-            <p>Secretaria Municipal de Finanças</p>
-            <p>Data e Hora de Emissão: $data_emissao</p>
-            <p>Número da Nota: $numero_nf</p>
-            <p>Código de Verificação: $codigo_verificacao</p>
-        </div>
-    </header>
+        public function body() {
+           
+        }
 
-    <section class='prestador'>
-        <h2>Prestador de Serviços</h2>
-        <p><strong>Nome/Razão Social:</strong> $nome_empresa</p>
-        <p><strong>CNPJ:</strong> $cnpj</p>
-        <p><strong>Endereço:</strong> $logradouro, $numero - $bairro</p>
-        <p><strong>Cidade/Estado:</strong> $cidade/$estado</p>
-        <p><strong>CEP:</strong> $cep</p>
-        <p><strong>Telefone:</strong> $telefone</p>
-    </section>
-
-    <section class='tomador'>
-        <h2>Tomador de Serviços</h2>
-        <p><strong>Nome/Razão Social:</strong> $nome_cliente</p>
-        <p><strong>CPF:</strong> $cpf_cliente</p>
-        <p><strong>Endereço:</strong> $logradouro_cliente, $numero_cliente - $bairro_cliente</p>
-        <p><strong>Cidade/Estado:</strong> $cidade_cliente/$estado_cliente</p>
-        <p><strong>CEP:</strong> $cep_cliente</p>
-    </section>
-
-    <section class='detalhes'>
-        <h2>Detalhes do Serviço Prestado</h2>
-        <p><strong>Descrição do Serviço:</strong> $descricao_servico</p>
-        <p><strong>Código do Serviço:</strong> $codigo_servico</p>
-        <p><strong>Valor do Serviço:</strong> R$ " . number_format($valor_servico, 2, ',', '.') . "</p>
-        <p><strong>Alíquota ISS:</strong> $aliquota_iss</p>
-        <p><strong>Valor do ISS:</strong> R$ " . number_format($valor_iss, 2, ',', '.') . "</p>
-        <p><strong>Base de Cálculo:</strong> R$ " . number_format($base_calculo, 2, ',', '.') . "</p>
-    </section>
-
-    <section class='informacoes-fiscais'>
-        <h2>Informações Fiscais e Tributárias</h2>
-        <p><strong>Natureza da Operação:</strong> $natureza_operacao</p>
-        <p><strong>Regime Especial de Tributação:</strong> $regime_tributacao</p>
-        <p><strong>Optante pelo Simples Nacional:</strong> $optante_simples</p>
-        <p><strong>ISS Retido:</strong> $iss_retido</p>
-        <p><strong>Responsável pelo Recolhimento do ISS:</strong> $responsavel_iss</p>
-    </section>
-
-    <section class='outras-informacoes'>
-        <h2>Outras Informações</h2>
-        <p><strong>Série:</strong> $serie</p>
-        <p><strong>Outras Retenções:</strong> $outras_retencoes</p>
-    </section>
-
-    <footer>
-        <p>Este é um documento gerado eletronicamente e não precisa de assinatura.</p>
-    </footer>
-</div>
-
-<style>
-    .nota-fiscal {
-        font-family: Arial, sans-serif;
-        border: 1px solid #000;
-        padding: 20px;
-        width: 90%;
-        margin: 20px auto;
-        background-color: #fff;
     }
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #000;
-        padding-bottom: 10px;
-    }
-
-    .logo img {
-        width: 100px;
-    }
-
-    .informacoes {
-        text-align: right;
-    }
-
-    .nota-fiscal h1 {
-        text-align: center;
-        font-size: 22px;
-        font-weight: bold;
-    }
-
-    .nota-fiscal h2 {
-        font-size: 18px;
-        margin-top: 20px;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    .nota-fiscal p {
-        font-size: 14px;
-        margin: 5px 0;
-    }
-
-    .nota-fiscal section {
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        padding: 15px;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-    }
-
-    .nota-fiscal section h2 {
-        margin-top: 0;
-    }
-
-    .nota-fiscal footer {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 12px;
-    }
-
-    .nota-fiscal .valor-total {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: right;
-    }
-</style>
-";
-
-    require_once __DIR__ . '/vendor/autoload.php';
-    $pdf = new TCPDF();
+    $pdf = new CustomPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf->SetMargins(10, 20, 10);
+    $pdf->SetFont('helvetica', '', 10);
     $pdf->AddPage();
-    $pdf->writeHTML($nota_fiscal, true, false, true, false, '');
+
+    $html = "
+    <style>
+        .nota-fiscal { font-size: 10pt; line-height: 1.6; }
+        .header, .footer { text-align: center; }
+        .section-title { font-weight: bold; font-size: 11pt; margin-top: 10px; }
+        .dados { margin: 10px 0; }
+        .dados p { margin: 2px 0; }
+        .table { width: 100%; border: 1px solid #000; border-collapse: collapse; }
+        .table th, .table td { border: 1px solid #000; padding: 5px; text-align: left; }
+    </style>
+    
+    <div class='nota-fiscal'>
+        <div class='dados'>
+            <p><strong>Data de Emissão:</strong> $data_emissao</p>
+            <p><strong>Número da Nota:</strong> $numero_nf</p>
+            <p><strong>Código de Verificação:</strong> $codigo_verificacao</p>
+        </div>
+    
+        <h2 class='section-title'>Prestador de Serviços</h2>
+        <div class='dados'>
+            <p><strong>Nome/Razão Social:</strong> $nome_empresa</p>
+            <p><strong>CNPJ:</strong> $cnpj</p>
+            <p><strong>Endereço:</strong> $logradouro, $numero - $bairro</p>
+            <p><strong>Cidade/Estado:</strong> $cidade/$estado</p>
+            <p><strong>CEP:</strong> $cep</p>
+            <p><strong>Telefone:</strong> $telefone</p>
+        </div>
+    
+        <h2 class='section-title'>Tomador de Serviços</h2>
+        <div class='dados'>
+            <p><strong>Nome/Razão Social:</strong> $nome_cliente</p>
+            <p><strong>CPF:</strong> $cpf_cliente</p>
+            <p><strong>Endereço:</strong> $logradouro_cliente, $numero_cliente - $bairro_cliente</p>
+            <p><strong>Cidade/Estado:</strong> $cidade_cliente/$estado_cliente</p>
+            <p><strong>CEP:</strong> $cep_cliente</p>
+        </div>
+    
+        <h2 class='section-title'>Detalhes do Serviço Prestado</h2>
+        <div class='dados'>
+            <p><strong>Descrição do Serviço:</strong> $descricao_servico</p>
+            <p><strong>Código do Serviço:</strong> $codigo_servico</p>
+            <p><strong>Valor do Serviço:</strong> R$ " . number_format($valor_servico, 2, ',', '.') . "</p>
+            <p><strong>Alíquota ISS:</strong> $aliquota_iss%</p>
+            <p><strong>Valor do ISS:</strong> R$ " . number_format($valor_iss, 2, ',', '.') . "</p>
+            <p><strong>Base de Cálculo:</strong> R$ " . number_format($base_calculo, 2, ',', '.') . "</p>
+        </div>
+    
+        <!-- Tabela de serviços -->
+        <h2 class='section-title'>Serviços</h2>
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>$descricao_servico</td>
+                    <td>R$ " . number_format($valor_servico, 2, ',', '.') . "</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    ";
+
+    $pdf->writeHTML($html, true, false, true, false, '');
 
     if ($forma_pagamento === 'Boleto Bancário') {
-        require_once __DIR__ . '/vendor/autoload.php';
         $barcode_generator = new BarcodeGeneratorPNG();
         $codigo_barras = $barcode_generator->getBarcode('12345678901234567890123456', $barcode_generator::TYPE_CODE_128);
-        $pdf->Image('@' . $codigo_barras, 15, 240, 180, 30, 'PNG', '', '', true, 150, '', false, false, 0, false, false, false);
+        $pdf->Image('@' . $codigo_barras, 15, 240, 180, 30, 'PNG');
     }
 
     $diretorio_pdf = __DIR__ . '/notas_fiscais/';
     if (!is_dir($diretorio_pdf)) {
-        mkdir($diretorio_pdf, 0755, true); 
+        mkdir($diretorio_pdf, 0755, true);
     }
-
     $filename = $diretorio_pdf . "nota_fiscal_" . date('YmdHis') . ".pdf";
     $pdf->Output($filename, 'F'); 
-
+    
     echo "<div style='text-align:center;'>
             <h2>Nota Fiscal gerada com sucesso!</h2>
             <p>Você será redirecionado em 3 segundos...</p>
           </div>";
-
+    
     echo "<script>
             setTimeout(function() {
-                window.location.href = 'formulario_nota_fiscal.php'; 
-            }, 3000); 
+                window.location.href = 'formulario_nota_fiscal.php';
+            }, 3000);
           </script>";
-        }
+
+    exit();
+    }
 ?>
