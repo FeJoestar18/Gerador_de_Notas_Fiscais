@@ -9,7 +9,6 @@ import { gerarNaturezaOperacao, gerarRegimeTributacao, gerarOptanteSimples, gera
 import gerarNumeroNF from '../support/gerarNumeroNF';
 import { gerarDataEmissao, gerarSerie, gerarCodigoVerificacao } from '../support/outrasInformacoes';
 import gerarOutrasRetencoes from '../support/outrasIncidencias';
-import { validarInscricaoMunicipal, gerarValoresAleatoriosCompleto } from '../support/calculo-tributario';
 
 describe('template spec', () => {
   const quantidadeDeTestes = 1; 
