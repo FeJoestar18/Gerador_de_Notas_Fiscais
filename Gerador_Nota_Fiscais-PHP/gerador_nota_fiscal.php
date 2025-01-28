@@ -47,6 +47,16 @@ function validarCPF($cpf) {
     return ($cpf[9] == $digito1 && $cpf[10] == $digito2);
 }
 
+function GerarChavedeAcesso() {
+    $key;
+
+    for ($i = 0; $i < 44; $i++) {
+        $key .= rand(0, 9);
+    }
+
+    return $key;
+}
+
 // Verifica se o método da requisição é POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -102,6 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formato_saida = isset($_POST['formato_saida']) ? $_POST['formato_saida'] : '';
     $forma_pagamento = isset($_POST['forma_pagamento']) ? $_POST['forma_pagamento'] : '';
     $valor_total = isset($_POST['valor_total']) ? $_POST['valor_total'] : '';
+
+    $key = GerarChavedeAcesso();
 
     // Validação do CNPJ
     if (!validarCNPJ($cnpj)) {
@@ -498,7 +510,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td>
                         <span class="nf-label">CHAVE DE ACESSO</span>
-                        <span class="bold block txt-center info"></span>
+                        <span class="bold block txt-center info">'. $key .'</span>
                     </td>
                 </tr>
                 <tr>
@@ -634,7 +646,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
            
         </div>
  
-        <!-- Calculo do Imposto -->
+       
         <p class="area-name">Calculo do imposto</p>
         <div class="wrapper-table">
             <table cellpadding="0" cellspacing="0" border="1" class="boxImposto">

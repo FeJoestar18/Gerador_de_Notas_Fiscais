@@ -96,7 +96,7 @@ describe('template spec', () => {
 
           // outras incidências
           cy.get('#outras_retencoes').type(outrasRetencoes);
-
+          
           // gerar nota fiscal
           cy.get('[type="submit"]').should('be.visible').click();
 
