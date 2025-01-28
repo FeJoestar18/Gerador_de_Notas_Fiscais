@@ -133,6 +133,10 @@
         <label for="outras_retencoes">Outras Retenções:</label>
         <input type="text" id="outras_retencoes" name="outras_retencoes" required><br>
 
+        <h1>Inscrição MUNICIPAL<'/h1>
+        <label for="inscricao_municipal">Inscrição Municipal:</label>
+        <input type="text" id="inscricao_municipal" name="inscricao_municipal" required><br>
+
         <h1>Formas de Pagamento</h1>
         <label for="formato_saida">Formato de Saída:</label>
         <select id="formato_saida" name="formato_saida" required>

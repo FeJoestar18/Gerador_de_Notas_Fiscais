@@ -104,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numero_nf = isset($_POST['numero_nf']) ? $_POST['numero_nf'] : '';
     $serie = isset($_POST['serie']) ? $_POST['serie'] : '';
     $codigo_verificacao = isset($_POST['codigo_verificacao']) ? $_POST['codigo_verificacao'] : '';
+    $inscricao_municipal = isset($_POST['inscricao_municipal']) ? $_POST['inscricao_municipal'] : '';
 
     // Outras Incidências
     $outras_retencoes = isset($_POST['outras_retencoes']) ? $_POST['outras_retencoes'] : '';
@@ -766,7 +767,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="field inscrMunicipal">
                         <span class="nf-label">INSCRIÇÃO MUNICIPAL</span>
-                        <span class="info txt-center"></span>
+                        <span class="info txt-center">'. $inscricao_municipal .'</span>
                     </td>
                     <td class="field valorTotal">
                         <span class="nf-label">VALOR TOTAL DOS SERVIÇOS</span>
