@@ -9,6 +9,7 @@ import { gerarNaturezaOperacao, gerarRegimeTributacao, gerarOptanteSimples, gera
 import gerarNumeroNF from '../support/gerarNumeroNF';
 import { gerarDataEmissao, gerarSerie, gerarCodigoVerificacao } from '../support/outrasInformacoes';
 import gerarOutrasRetencoes from '../support/outrasIncidencias';
+import { validarInscricaoMunicipal, gerarValoresAleatoriosCompleto } from '../support/calculo-tributario';
 
 describe('template spec', () => {
   const quantidadeDeTestes = 1; 
@@ -99,6 +100,7 @@ describe('template spec', () => {
           
           // gerar nota fiscal
           cy.get('[type="submit"]').should('be.visible').click();
+          
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/gerador_nota_fiscal.php');
 
