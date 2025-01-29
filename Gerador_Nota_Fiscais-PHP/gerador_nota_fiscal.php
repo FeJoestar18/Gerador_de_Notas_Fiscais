@@ -4,12 +4,17 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-// Funções de Validação de CNPJ e CPF
 function validarCNPJ($cnpj) {
+    if (empty($cnpj)) {
+        return false; 
+    }
+
     $cnpj = preg_replace('/\D/', '', $cnpj);
+
     if (strlen($cnpj) != 14 || preg_match('/(\d)\1{13}/', $cnpj)) {
         return false;
     }
+
     $soma = 0;
     $peso = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
     for ($i = 0; $i < 12; $i++) {
@@ -24,44 +29,83 @@ function validarCNPJ($cnpj) {
     }
     $resto = $soma % 11;
     $digito2 = $resto < 2 ? 0 : 11 - $resto;
+
     return ($cnpj[12] == $digito1 && $cnpj[13] == $digito2);
 }
 
 function validarCPF($cpf) {
-    $cpf = preg_replace('/\D/', '', $cpf);
+    if ($cpf === null || $cpf === '') {
+        return false; 
+    }
+
+    $cpf = preg_replace('/\D/', '', $cpf); 
     if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) {
         return false;
     }
+
     $soma = 0;
     for ($i = 0; $i < 9; $i++) {
         $soma += $cpf[$i] * (10 - $i);
     }
+
     $resto = $soma % 11;
     $digito1 = $resto < 2 ? 0 : 11 - $resto;
     $soma = 0;
     for ($i = 0; $i < 10; $i++) {
         $soma += $cpf[$i] * (11 - $i);
     }
+
     $resto = $soma % 11;
     $digito2 = $resto < 2 ? 0 : 11 - $resto;
+
     return ($cpf[9] == $digito1 && $cpf[10] == $digito2);
 }
 
-function GerarChavedeAcesso() {
-    $key = ''; 
+function gerarChaveAcesso(
+    $uf, 
+    $ano, 
+    $mes, 
+    $cnpj, 
+    $modelo, 
+    $serie, 
+    $numeroNota, 
+    $codigoAleatorio
+) {
+    $cnpj = preg_replace('/\D/', '', $cnpj);
 
-    for ($i = 0; $i < 44; $i++) {
-        $key .= rand(0, 9);
-    }
+    $cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
 
-    return $key;
+    $chave = str_pad($uf, 2, '0', STR_PAD_LEFT) .
+             str_pad($ano, 2, '0', STR_PAD_LEFT) .
+             str_pad($mes, 2, '0', STR_PAD_LEFT) .
+             $cnpj .
+             str_pad($modelo, 2, '0', STR_PAD_LEFT) .
+             str_pad($serie, 3, '0', STR_PAD_LEFT) .
+             str_pad($numeroNota, 9, '0', STR_PAD_LEFT) .
+             str_pad($codigoAleatorio, 8, '0', STR_PAD_LEFT);
+
+    $digitoVerificador = calcularDigitoVerificador($chave);
+
+    return $chave . $digitoVerificador;
 }
 
+function calcularDigitoVerificador($chave) {
+    $pesos = [2, 3, 4, 5, 6, 7, 8, 9];
+    $soma = 0;
+    $pesoAtual = 0;
 
-// Verifica se o método da requisição é POST
+    for ($i = strlen($chave) - 1; $i >= 0; $i--) {
+        $soma += (int)$chave[$i] * $pesos[$pesoAtual]; 
+        $pesoAtual = ($pesoAtual + 1) % count($pesos);
+    }
+    
+
+    $resto = $soma % 11;
+    return $resto < 2 ? 0 : 11 - $resto; 
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Dados do Prestador de Serviços
     $nome_empresa = isset($_POST['nome_empresa']) ? $_POST['nome_empresa'] : '';
     $cep = isset($_POST['cep']) ? $_POST['cep'] : '';
     $logradouro = isset($_POST['logradouro']) ? $_POST['logradouro'] : '';
@@ -69,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $endereco = isset($_POST['endereco']) ? $_POST['endereco'] : '';
     $bairro = isset($_POST['bairro']) ? $_POST['bairro'] : '';
     $cidade = isset($_POST['cidade']) ? $_POST['cidade'] : '';
-    $estado = isset($_POST['estado']) ? $_POST['estado'] : '';
-    $cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : '';
+    $estado = isset($_POST['estado']) ? $_POST['estado'] : ''; 
+    $cnpj = isset($_POST['cnpj']) ? $_POST['cnpj'] : '';  
     $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : '';
     $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : '';
     $ie = isset($_POST['ie']) ? $_POST['ie'] : '';
@@ -117,21 +161,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $valor_total = isset($_POST['valor_total']) ? $_POST['valor_total'] : '';
     $formato_saida = isset($_POST['formato_saida']) ? $_POST['formato_saida'] : '';
     $forma_pagamento = isset($_POST['forma_pagamento']) ? $_POST['forma_pagamento'] : '';
-    
-    $key = GerarChavedeAcesso();
 
-    // Validação do CNPJ
-    if (!validarCNPJ($cnpj)) {
-        echo "<script>alert('CNPJ inválido');</script>";
-        exit;
+    if (empty($estado) || empty($data_emissao) || empty($serie) || empty($numero_nf) || empty($cnpj)) {
+        echo "Por favor, preencha todos os campos obrigatórios.";
+    } else {
+        
+        $uf = substr($estado, 0, 2); 
+        $ano = substr($data_emissao, 2, 2); 
+        $mes = substr($data_emissao, 5, 2); 
+        $codigoAleatorio = rand(10000000, 99999999); 
+
+        $modelo = "55"; 
+        $serie = str_pad($serie, 3, '0', STR_PAD_LEFT); // Série da nota
+
+        $numeroNota = str_pad($numero_nf, 9, '0', STR_PAD_LEFT);
+
+        $key = gerarChaveAcesso($uf, $ano, $mes, $cnpj, $modelo, $serie, $numeroNota, $codigoAleatorio);
+        $formattedKey = chunk_split($key, 4, ' ');
+
+        echo "Chave de Acesso: " . $formattedKey;
     }
+}
 
-    // Validação do CPF
+if (isset($_POST['cpf'])) {
+    $cpf = $_POST['cpf'];
+
     if (!validarCPF($cpf)) {
         echo "<script>alert('CPF inválido');</script>";
         exit;
     }
+} else {
+    echo "<script>alert('CPF não fornecido');</script>";
+    exit;
+}
 
+if (isset($_POST['cnpj']) && !validarCNPJ($_POST['cnpj'])) {
+    echo "<script>alert('CNPJ inválido');</script>";
+    exit;
+}
     $nota_fiscal = '
   <style type="text/css">
     @media print {
@@ -511,7 +578,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td>
                         <span class="nf-label">CHAVE DE ACESSO</span>
-                        <span class="bold block txt-center info">'. $key .'</span>
+                        <span class="bold block txt-center info">'. $formattedKey .'</span>
                     </td>
                 </tr>
                 <tr>
@@ -756,25 +823,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
  
-        <footer>
-            <table cellpadding="0" cellspacing="0">
-                <tbody>
-                    <tr>
-                        <td style="text-align: right"><strong>Empresa de Software www.empresa.com</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-        </footer>
-    </div>
-    
-</div>
-</table>
+          <footer>
+        <table cellpadding="0" cellspacing="0" style="width: 100%; border-top: 1px solid #000;">
+            <tbody>
+                <tr>
+                    <td style="text-align: center">
+                        <span>Codigo de barras: </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
+
 </body>
 </html>
-
 ';
-
     require_once __DIR__ . '/vendor/autoload.php';
+
+
     $options = new Options();
     $options->set('isHtml5ParserEnabled', true);
     $options->set('isPhpEnabled', true);
@@ -782,7 +848,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $dompdf->loadHtml($nota_fiscal);
 
-    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->setPaper('A4', 'portrait'); 
 
     $dompdf->render();
 
@@ -796,11 +862,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($forma_pagamento === 'Boleto Bancário') {
         $barcode_generator = new BarcodeGeneratorPNG();
         $codigo_barras = $barcode_generator->getBarcode('12345678901234567890123456', $barcode_generator::TYPE_CODE_128);
-
+        
         $barcode_base64 = base64_encode($codigo_barras);
+        
+        $dompdf->getCanvas()->image('data:image/png;base64,' . $barcode_base64, 100, 15, 400, 150);
 
-        $image_data = 'data:image/png;base64,' . $barcode_base64;
-        $dompdf->getCanvas()->image($image_data, 100, 250, 200, 30); 
     }
 
     file_put_contents($filename, $dompdf->output());
@@ -808,13 +874,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<div style='text-align:center;'>
             <h2>Nota Fiscal gerada com sucesso!</h2>
             <p>O PDF foi gerado e salvo com sucesso!</p>
-          </div>";
+        </div>";
 
     echo "<script>
             setTimeout(function() {
                 window.location.href = 'formulario_nota_fiscal.php'; 
             }, 3000); 
-          </script>";
-}
+        </script>";
 
-?>
+ ?>

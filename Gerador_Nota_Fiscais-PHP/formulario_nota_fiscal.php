@@ -7,7 +7,7 @@
     <script src="js/BuscarEndereco.js"></script>
     <script src="js/BuscarEnderecoCliente.js"></script>
     <script src="js/CalculoFinal.js"></script>
-    <script src="js/Mask.js"></script>
+    <!-- <script src="js/Mask.js"></script> -->
     <title>Gerador de Notas Fiscais</title>
 
 </head>
@@ -42,7 +42,7 @@
         
         <label for="cnpj">CNPJ:</label>
         <input type="text" id="cnpj" name="cnpj" maxlength="18" required><br>
-        
+    
         <label for="cpf">CPF:</label>
         <input type="text" id="cpf" name="cpf" maxlength="14" required><br>
         
@@ -193,7 +193,7 @@
 
         <label for="forma_pagamento">Forma de Pagamento:</label>
         <select id="forma_pagamento" name="forma_pagamento" required>
-            <option value="Pix">Pix</option>
+            <!-- <option value="Pix">Pix</option> -->
             <!-- <option value="Cartão de Crédito">Cartão de Crédito</option> -->
             <option value="Boleto Bancário">Boleto Bancário</option>
         </select><br> 

@@ -77,6 +77,7 @@ describe('template spec', () => {
           cy.get('#nome_empresa').type(nomeEmpresa);
           cy.get('#cep').type(cepAleatorio);
           cy.get('#numero').type(NumeroAleatorio_cep.toString());
+          // cy.pause();
           cy.get('#cnpj').type(CNPJ);
           cy.get('#cpf').type(CPF);
           cy.get('#telefone').type(telefoneEmpresa);
@@ -147,6 +148,7 @@ describe('template spec', () => {
           cy.get('#aliq_icms').type(imposto.aliqIcms); 
           cy.get('#aliq_ipi').type(imposto.aliqIpi);
                 
+          // cy.pause();
           // gerar nota fisca
           cy.get('[type="submit"]').should('be.visible').click();
           
