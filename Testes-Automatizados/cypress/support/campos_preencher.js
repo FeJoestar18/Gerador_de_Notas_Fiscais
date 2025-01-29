@@ -11,52 +11,51 @@ import { gerarDataEmissao, gerarSerie, gerarCodigoVerificacao } from '../support
 import gerarOutrasRetencoes from '../support/outrasIncidencias';
 import campos_preencher from '../support/campos_preencher';
 
-describe('template spec', () => {
-  const quantidadeDeTestes = 1; 
+describe('template spec', () => { 
 
   it('Executa o teste em looping', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false;
     });
 
-    for (let i = 0; i < quantidadeDeTestes; i++) {
-      cy.log(`Execução ${i + 1} de ${quantidadeDeTestes}`); 
+    // for (let i = 0; i < quantidadeDeTestes; i++) {
+    //   cy.log(`Execução ${i + 1} de ${quantidadeDeTestes}`); 
 
-      cy.fixture('ceps.json').then((data) => {
-        const ceps = data.ceps;
-        const cepAleatorio = ceps[Math.floor(Math.random() * ceps.length)];
-
-        cy.fixture('cepcliente.json').then((data) => {
-          const cepsCliente = data.ceps_cliente;
-          const cepAleatorioCliente = cepsCliente[Math.floor(Math.random() * cepsCliente.length)];
-
-          const CNPJ = geradorCNPJ();
-          const CPF = generateRandomCPF();
-          const nomeEmpresa = faker.company.name();
-
-          const NumeroAleatorio_cep = gerarNumeroAleatorio();
-          const telefoneEmpresa = faker.phone.number();
-          const numeroAleatorioIE = gerarNumeroAleatorioIE();
-
-          const nomeCliente = faker.name.fullName();
-          const cpfValido = gerarCpfValido();
-
-          const descricaoServico = gerarDescricaoServico();
-          const codigoServico = gerarCodigoServico();
-          const valorServico = gerarValorServico();
-
-          const naturezaOperacao = gerarNaturezaOperacao();
-          const regimeTributacao = gerarRegimeTributacao();
-          const optanteSimples = gerarOptanteSimples();
-          const issRetido = gerarIssRetido();
-          const responsavelIss = gerarResponsavelIss();
-
-          const numeroNF = gerarNumeroNF();
-          const dataEmissao = gerarDataEmissao();
-          const serie = gerarSerie();
-          const codigoVerificacao = gerarCodigoVerificacao();
-
-          const outrasRetencoes = gerarOutrasRetencoes();
+        cy.fixture('ceps.json').then((data) => {
+            const ceps = data.ceps;
+            const cepAleatorio = ceps[Math.floor(Math.random() * ceps.length)];
+    
+            cy.fixture('cepcliente.json').then((data) => {
+              const cepsCliente = data.ceps_cliente;
+              const cepAleatorioCliente = cepsCliente[Math.floor(Math.random() * cepsCliente.length)];
+    
+              const CNPJ = geradorCNPJ();
+              const CPF = generateRandomCPF();
+              const nomeEmpresa = faker.company.name();
+    
+              const NumeroAleatorio_cep = gerarNumeroAleatorio();
+              const telefoneEmpresa = faker.phone.number();
+              const numeroAleatorioIE = gerarNumeroAleatorioIE();
+    
+              const nomeCliente = faker.name.fullName();
+              const cpfValido = gerarCpfValido();
+    
+              const descricaoServico = gerarDescricaoServico();
+              const codigoServico = gerarCodigoServico();
+              const valorServico = gerarValorServico();
+    
+              const naturezaOperacao = gerarNaturezaOperacao();
+              const regimeTributacao = gerarRegimeTributacao();
+              const optanteSimples = gerarOptanteSimples();
+              const issRetido = gerarIssRetido();
+              const responsavelIss = gerarResponsavelIss();
+    
+              const numeroNF = gerarNumeroNF();
+              const dataEmissao = gerarDataEmissao();
+              const serie = gerarSerie();
+              const codigoVerificacao = gerarCodigoVerificacao();
+    
+              const outrasRetencoes = gerarOutrasRetencoes();
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
 
@@ -72,8 +71,6 @@ describe('template spec', () => {
           cy.get('#nome_cliente').type(nomeCliente);
           cy.get('#cpf_cliente').type(cpfValido);
           cy.get('#cep_cliente').type(cepAleatorioCliente).should('be.visible');
-          // cy.wait(5000);
-          // cy.get('#logradouro_cliente').should('be.visible').click();
           cy.get('#numero_cliente').type(NumeroAleatorio_cep.toString());
 
           // dados do serviço
@@ -98,40 +95,19 @@ describe('template spec', () => {
           // outras incidências
           cy.get('#outras_retencoes').type(outrasRetencoes);
 
-          cy.get('#inscricao_municipal');
-          cy.get('#inscricao_subst_trib');
-          cy.get('#inscricao_subst_trib');
-          cy.get('#hora_entrada_saida');
-          cy.get('#natureza_operacao');
-          cy.get('#regime_tributacao');
-          cy.get('#optante_simples');
-          cy.get('#iss_retido');
-          cy.get('#responsavel_iss');
-          cy.get('#base_calculo_icms')
-          cy.get('#valor_icms');
-          cy.get('#valor_ipi');
-          cy.get('#valor_unitario');
-          cy.get('#quantidade');
-          cy.get('#desconto');
-          cy.get('#valor_frete');
-          cy.get('#valor_seguro');
-          cy.get('#outras_despesas');
-          cy.get('#aliq_icms');
-          cy.get('#aliq_ipi');
-          cy.get('#valor_iss');
-          cy.get('#valor_servico');
-          cy.get('#valor_total');
+          // Preenchendo os campos usando campos_preencher
+          Object.keys(campos_preencher).forEach(id => {
+            cy.get(`#${id}`).type(campos_preencher[id].toString());
+          });
 
-          
           // gerar nota fiscal
           cy.get('[type="submit"]').should('be.visible').click();
-          
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/gerador_nota_fiscal.php');
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
         });
       });
-    }
-  });
+    });
 });
+ 
