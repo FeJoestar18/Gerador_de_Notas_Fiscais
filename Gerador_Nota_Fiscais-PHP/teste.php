@@ -372,10 +372,6 @@
                             </span>
                         </p>
                     </td>
-                    <td class="txt-upper" style="width: 85mm;">
-                        <span class="nf-label">Controle do Fisco</span>
-                        <span class="codigo"></span>
-                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -417,7 +413,7 @@
                     </td>
                     <td style="width: 67.5mm;">
                         <span class="nf-label">INSCRIÇÃO ESTADUAL DO SUBST. TRIB.</span>
-                        <span class="info"></span>
+                        <span class="info">$inscricao_subst_trib</span>
                     </td>
                     <td style="width: 64.3mm">
                         <span class="nf-label">CNPJ</span>
@@ -498,7 +494,7 @@
                                     </td>
                                     <td style="width: 51mm">
                                         <span class="nf-label">INSCRIÇÃO ESTADUAL</span>
-                                        <span class="info"></span>
+                                        <span class="info">'.$ie.'</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -506,7 +502,7 @@
                     </td>
                     <td>
                         <span class="nf-label">HORA ENTR./SAÍDA</span>
-                        <span id="info"></span>
+                        <span id="info">'.$hora_entrada_saida.'</span>
                     </td>
                 </tr>
             </tbody>
@@ -518,81 +514,42 @@
         </div>
  
        
-        <p class="area-name">Calculo do imposto</p>
+        <p class="area-name">Cálculo do Imposto</p>
         <div class="wrapper-table">
             <table cellpadding="0" cellspacing="0" border="1" class="boxImposto">
                 <tbody>
                     <tr>
                         <td>
                             <span class="nf-label label-small">BASE DE CÁLC. DO ICMS</span>
-                            <span class="info"></span>
+                            <span class="info">'.$base_calculo_icms.'</span>
                         </td>
                         <td>
                             <span class="nf-label">VALOR DO ICMS</span>
-                            <span class="info"></span>
+                            <span class="info">'.$valor_icms.'</span>
                         </td>
-                        <td>
-                            <span class="nf-label label-small" style="font-size: 4pt;">BASE DE CÁLC. DO ICMS ST</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label">VALOR DO ICMS ST</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label label-small">V. IMP. IMPORTAÇÃO</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label label-small">V. ICMS UF REMET.</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label">VALOR DO FCP</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label">VALOR DO PIS</span>
-                            <span class="info"></span>
-                        </td>
+                        
                         <td>
                             <span class="nf-label label-small">V. TOTAL DE PRODUTOS</span>
-                            <span class="info">'.$valor_total.'</span>
+                            <span class="info">'.$valor_total_produtos.'</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="nf-label">VALOR DO FRETE</span>
-                            <span class="info"></span>
+                            <span class="info">'.$valor_frete.'</span>
                         </td>
                         <td>
                             <span class="nf-label">VALOR DO SEGURO</span>
-                            <span class="info"></span>
+                            <span class="info">'.$valor_seguro.'</span>
                         </td>
                         <td>
                             <span class="nf-label">DESCONTO</span>
-                            <span class="info"></span>
+                            <span class="info">'.$desconto.'</span>
                         </td>
                         <td>
                             <span class="nf-label">OUTRAS DESP.</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label">VALOR DO IPI</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label">V. ICMS UF DEST.</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label label-small">V. APROX. DO TRIBUTO</span>
-                            <span class="info"></span>
-                        </td>
-                        <td>
-                            <span class="nf-label label-small">VALOR DA CONFINS</span>
-                            <span class="info"></span>
-                        </td>
+                            <span class="info">'.$outras_despesas.'</span>
+                        </td>                    
                         <td>
                             <span class="nf-label label-small">V. TOTAL DA NOTA</span>
                             <span class="info">'.$valor_total.'</span>
@@ -647,10 +604,6 @@
                         <span class="nf-label">BASE DE CÁLCULO DO ISSQN</span>
                         <span class="info txt-right">'.$iss_retido.'</span>
                     </td>
-                    <td class="field valorIssqn">
-                        <span class="nf-label">VALOR DO ISSQN</span>
-                        <span class="info txt-right"></span>
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -662,11 +615,7 @@
                 <tr>
                     <td class="field infoComplementar">
                         <span class="nf-label">INFORMAÇÕES COMPLEMENTARES</span>
-                        <span>'.$outras_retencoes.'</span>
-                    </td>
-                    <td class="field reservaFisco" style="width: 85mm; height: 24mm">
-                        <span class="nf-label">RESERVA AO FISCO</span>
-                        <span></span>
+                        <span>'. $outras_retencoes .'</span>
                     </td>
                 </tr>
             </tbody>
