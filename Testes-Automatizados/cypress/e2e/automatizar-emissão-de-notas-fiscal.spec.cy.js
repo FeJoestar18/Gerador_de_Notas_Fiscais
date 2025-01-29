@@ -99,6 +99,7 @@ describe('template spec', () => {
           
           // gerar nota fiscal
           cy.get('[type="submit"]').should('be.visible').click();
+          
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/gerador_nota_fiscal.php');
 
