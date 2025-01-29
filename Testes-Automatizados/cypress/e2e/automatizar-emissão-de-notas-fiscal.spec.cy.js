@@ -9,18 +9,15 @@ import { gerarNaturezaOperacao, gerarRegimeTributacao, gerarOptanteSimples, gera
 import gerarNumeroNF from '../support/gerarNumeroNF';
 import { gerarDataEmissao, gerarSerie, gerarCodigoVerificacao } from '../support/outrasInformacoes';
 import gerarOutrasRetencoes from '../support/outrasIncidencias';
-import campos_preencher from '../support/campos_preencher';
+import gerarInscricao from '../support/gerarInscricao';
+import gerarValoresDados from '../support/UltimosValores';
 
 describe('template spec', () => {
-  const quantidadeDeTestes = 1; 
 
   it('Executa o teste em looping', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false;
     });
-
-    for (let i = 0; i < quantidadeDeTestes; i++) {
-      cy.log(`Execução ${i + 1} de ${quantidadeDeTestes}`); 
 
       cy.fixture('ceps.json').then((data) => {
         const ceps = data.ceps;
@@ -57,6 +54,23 @@ describe('template spec', () => {
           const codigoVerificacao = gerarCodigoVerificacao();
 
           const outrasRetencoes = gerarOutrasRetencoes();
+
+          const dados = gerarInscricao();
+          const imposto = gerarValoresDados();
+
+          // const baseCalculoIcms = gerarValoresDados();
+          // const valorIcms  =  gerarValoresDados();
+          // const valorIpi =  gerarValoresDados();
+          // const valorUnitario =  gerarValoresDados();
+          // const quantidade =  gerarValoresDados();
+          // const desconto =  gerarValoresDados();
+          // const valorFrete =  gerarValoresDados();
+          // const valorSeguro =  gerarValoresDados();
+          // const outrasDespesas =  gerarValoresDados();
+          // const aliqIcms =  gerarValoresDados();
+          // const aliqIpi =  gerarValoresDados();
+
+
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
 
@@ -98,40 +112,49 @@ describe('template spec', () => {
           // outras incidências
           cy.get('#outras_retencoes').type(outrasRetencoes);
 
-          cy.get('#inscricao_municipal');
-          cy.get('#inscricao_subst_trib');
-          cy.get('#inscricao_subst_trib');
-          cy.get('#hora_entrada_saida');
-          cy.get('#natureza_operacao');
-          cy.get('#regime_tributacao');
-          cy.get('#optante_simples');
-          cy.get('#iss_retido');
-          cy.get('#responsavel_iss');
-          cy.get('#base_calculo_icms')
-          cy.get('#valor_icms');
-          cy.get('#valor_ipi');
-          cy.get('#valor_unitario');
-          cy.get('#quantidade');
-          cy.get('#desconto');
-          cy.get('#valor_frete');
-          cy.get('#valor_seguro');
-          cy.get('#outras_despesas');
-          cy.get('#aliq_icms');
-          cy.get('#aliq_ipi');
-          cy.get('#valor_iss');
-          cy.get('#valor_servico');
-          cy.get('#valor_total');
-
+          // inscrições
+          cy.log('Dados gerados: ', JSON.stringify(dados));
+    
+          // Verificando especificamente o valor de inscricaoEstadual
+          cy.log('Inscrição Estadual: ', dados.inscricaoEstadual); // Log para verificar
           
-          // gerar nota fiscal
+          // Verifique se a inscrição estadual é válida antes de usá-la
+          if (dados.inscricaoEstadual) {
+            cy.get('#inscricao_municipal').type(dados.inscricaoMunicipal);
+            cy.get('#inscricao_subst_trib').type(dados.inscricaoSubstTrib);
+            cy.get('#inscricao_estadual').type(dados.inscricaoEstadual);
+            cy.get('#hora_entrada_saida').type(dados.horaEntradaSaida);
+          } else {
+            throw new Error('Inscrição Estadual não gerada corretamente.');
+          }
+
+          // itens da nota fiscal
+
+          cy.log('Dados gerados:', JSON.stringify(imposto));
+
+          // Verificando especificamente o valor de aliqIpi
+          cy.log('Valor de Aliq Ipi:', imposto.aliqIpi);
+
+          cy.get('#base_calculo_icms').type(imposto.baseCalculoIcms); 
+          cy.get('#valor_icms').type(imposto.valorIcms);  
+          cy.get('#valor_ipi').type(imposto.valorIpi);  
+          cy.get('#valor_unitario').type(imposto.valorUnitario);  
+          cy.get('#quantidade').type(imposto.quantidade);  
+          cy.get('#desconto').type(imposto.desconto);  
+          cy.get('#valor_frete').type(imposto.valorFrete); 
+          cy.get('#valor_seguro').type(imposto.valorSeguro);  
+          cy.get('#outras_despesas').type(imposto.outrasDespesas);  
+          cy.get('#aliq_icms').type(imposto.aliqIcms); 
+          cy.get('#aliq_ipi').type(imposto.aliqIpi);
+                
+          // gerar nota fisca
           cy.get('[type="submit"]').should('be.visible').click();
           
-
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/gerador_nota_fiscal.php');
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
         });
       });
-    }
+    });
   });
-});
+

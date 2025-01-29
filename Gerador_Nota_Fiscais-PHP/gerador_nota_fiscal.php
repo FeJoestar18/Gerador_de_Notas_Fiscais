@@ -326,8 +326,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <td>'. $aliq_ipi .'</td>
     </tr>
     <tr>
-        <th>Valor Total de Produtos</th>
-        <td>'. $valor_total_produto .'</td>
     </tr>
     <tr>
         <th>Alíquota ISS</th>
