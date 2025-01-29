@@ -109,6 +109,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Outras Incidências
     $outras_retencoes = isset($_POST['outras_retencoes']) ? $_POST['outras_retencoes'] : '';
+    $inscricao_subst_trib = isset($_POST['inscricao_subst_trib']) ? $_POST['inscricao_subst_trib'] : '';
+    $inscricao_estadual = isset($_POST['inscricao_estadual']) ? $_POST['inscricao_estadual'] : '';
+    $hora_entrada_saida = isset($_POST['hora_entrada_saida']) ? $_POST['hora_entrada_saida'] : '';
+    $base_calculo_icms = isset($_POST['base_calculo_icms']) ? $_POST['base_calculo_icms'] : '';
+    $valor_icms = isset($_POST['valor_icms']) ? $_POST['valor_icms'] : '';
+    $base_calculo_icms_st = isset($_POST['base_calculo_icms_st']) ? $_POST['base_calculo_icms_st'] : '';
+    $valor_icms_st = isset($_POST['valor_icms_st']) ? $_POST['valor_icms_st'] : '';
+    $valor_importacao = isset($_POST['valor_importacao']) ? $_POST['valor_importacao'] : '';
+    $valor_icms_uf_remet = isset($_POST['valor_icms_uf_remet']) ? $_POST['valor_icms_uf_remet'] : '';
+    $valor_fcp = isset($_POST['valor_fcp']) ? $_POST['valor_fcp'] : '';
+    $valor_pis = isset($_POST['valor_pis']) ? $_POST['valor_pis'] : '';
+    $valor_total_produtos = isset($_POST['valor_total_produtos']) ? $_POST['valor_total_produtos'] : '';
+    $valor_frete = isset($_POST['valor_frete']) ? $_POST['valor_frete'] : '';
+    $valor_seguro = isset($_POST['valor_seguro']) ? $_POST['valor_seguro'] : '';
+    $desconto = isset($_POST['desconto']) ? $_POST['desconto'] : '';
+    $outras_despesas = isset($_POST['outras_despesas']) ? $_POST['outras_despesas'] : '';
+    $valor_ipi = isset($_POST['valor_ipi']) ? $_POST['valor_ipi'] : '';
+    $valor_icms_uf_dest = isset($_POST['valor_icms_uf_dest']) ? $_POST['valor_icms_uf_dest'] : '';
+    $valor_aprox_tributo = isset($_POST['valor_aprox_tributo']) ? $_POST['valor_aprox_tributo'] : '';
+    $valor_confins = isset($_POST['valor_confins']) ? $_POST['valor_confins'] : '';
+    $valor_total_nota = isset($_POST['valor_total_nota']) ? $_POST['valor_total_nota'] : '';
+    $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : '';
+    $descricao_produto = isset($_POST['descricao_produto']) ? $_POST['descricao_produto'] : '';
+    $ncms = isset($_POST['ncms']) ? $_POST['ncms'] : '';
+    $cst = isset($_POST['cst']) ? $_POST['cst'] : '';
+    $cfop = isset($_POST['cfop']) ? $_POST['cfop'] : '';
+    $unidade = isset($_POST['unidade']) ? $_POST['unidade'] : '';
+    $quantidade = isset($_POST['quantidade']) ? $_POST['quantidade'] : '';
+    $valor_unitario = isset($_POST['valor_unitario']) ? $_POST['valor_unitario'] : '';
+    $valor_total = isset($_POST['valor_total']) ? $_POST['valor_total'] : '';
+    $bc_icms = isset($_POST['bc_icms']) ? $_POST['bc_icms'] : '';
+    $valor_icms_final = isset($_POST['valor_icms_final']) ? $_POST['valor_icms_final'] : '';
+    $valor_ipi_final = isset($_POST['valor_ipi_final']) ? $_POST['valor_ipi_final'] : '';
+    $aliq_icms = isset($_POST['aliq_icms']) ? $_POST['aliq_icms'] : '';
+    $aliq_ipi = isset($_POST['aliq_ipi']) ? $_POST['aliq_ipi'] : '';
+    $reserva_fisco = isset($_POST['reserva_fisco']) ? $_POST['reserva_fisco'] : '';
 
     // Formas de Pagamento
     $formato_saida = isset($_POST['formato_saida']) ? $_POST['formato_saida'] : '';
@@ -129,8 +165,307 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $nota_fiscal = '
-   
-    ';
+    <table>
+        <tr>
+            <th>Nome da Empresa</th>
+            <td>' . $nome_empresa . '</td>
+        </tr>
+        <tr>
+            <th>CEP</th>
+            <td>' . $cep . '</td>
+        </tr>
+        <tr>
+            <th>Logradouro</th>
+            <td>' . $logradouro . '</td>
+        </tr>
+        <tr>
+            <th>Número</th>
+            <td>' . $numero . '</td>
+        </tr>
+        <tr>
+            <th>Bairro</th>
+            <td>' . $bairro . '</td>
+        </tr>
+        <tr>
+            <th>Cidade</th>
+            <td>' . $cidade . '</td>
+        </tr>
+        <tr>
+            <th>Estado</th>
+            <td>' . $estado . '</td>
+        </tr>
+        <tr>
+            <th>CNPJ</th>
+            <td>' . $cnpj . '</td>
+        </tr>
+        <tr>
+            <th>CPF</th>
+            <td>' . $cpf . '</td>
+        </tr>
+        <tr>
+            <th>Telefone</th>
+            <td>' . $telefone . '</td>
+        </tr>
+        <tr>
+            <th>Inscrição Estadual</th>
+            <td>' . $ie . '</td>
+        </tr>
+
+        <tr>
+            <th>Nome do Cliente</th>
+            <td>' . $nome_cliente . '</td>
+        </tr>
+        <tr>
+            <th>CPF do Cliente</th>
+            <td>' . $cpf_cliente . '</td>
+        </tr>
+        <tr>
+            <th>CNPJ do Cliente</th>
+            <td>' . $cnpj_cliente . '</td>
+        </tr>
+        <tr>
+            <th>CEP do Cliente</th>
+            <td>' . $cep_cliente . '</td>
+        </tr>
+        <tr>
+            <th>Logradouro do Cliente</th>
+            <td>' . $logradouro_cliente . '</td>
+        </tr>
+        <tr>
+            <th>Número do Cliente</th>
+            <td>' . $numero_cliente . '</td>
+        </tr>
+        <tr>
+            <th>Bairro do Cliente</th>
+            <td>' . $bairro_cliente . '</td>
+        </tr>
+        <tr>
+            <th>Cidade do Cliente</th>
+            <td>' . $cidade_cliente . '</td>
+        </tr>
+        <tr>
+            <th>Estado do Cliente</th>
+            <td>' . $estado_cliente . '</td>
+        </tr>
+
+        <tr>
+            <th>Descrição do Serviço</th>
+            <td>' . $descricao_servico . '</td>
+        </tr>
+        <tr>
+            <th>Código do Serviço</th>
+            <td>' . $codigo_servico . '</td>
+        </tr>
+        <tr>
+            <th>Valor do Serviço</th>
+            <td>' . $valor_servico . '</td>
+        </tr>
+        <tr>
+            <th>Alíquota de ISS</th>
+            <td>' . $aliquota_iss . '</td>
+        </tr>
+        <tr>
+            <th>Valor de ISS</th>
+            <td>' . $valor_iss . '</td>
+        </tr>
+        <tr>
+            <th>Base de Cálculo</th>
+            <td>' . $base_calculo . '</td>
+        </tr>
+
+        <tr>
+            <th>Natureza da Operação</th>
+            <td>' . $natureza_operacao . '</td>
+        </tr>
+        <tr>
+            <th>Regime de Tributação</th>
+            <td>' . $regime_tributacao . '</td>
+        </tr>
+        <tr>
+            <th>Optante Simples</th>
+            <td>' . $optante_simples . '</td>
+        </tr>
+        <tr>
+            <th>ISS Retido</th>
+            <td>' . $iss_retido . '</td>
+        </tr>
+        <tr>
+            <th>Responsável pelo ISS</th>
+            <td>' . $responsavel_iss . '</td>
+        </tr>
+
+        <tr>
+            <th>Data de Emissão</th>
+            <td>' . $data_emissao . '</td>
+        </tr>
+        <tr>
+            <th>Número da NF</th>
+            <td>' . $numero_nf . '</td>
+        </tr>
+        <tr>
+            <th>Série</th>
+            <td>' . $serie . '</td>
+        </tr>
+        <tr>
+            <th>Código de Verificação</th>
+            <td>' . $codigo_verificacao . '</td>
+        </tr>
+        <tr>
+            <th>Inscrição Municipal</th>
+            <td>' . $inscricao_municipal . '</td>
+        </tr>
+
+        <tr>
+            <th>Outras Retenções</th>
+            <td>' . $outras_retencoes . '</td>
+        </tr>
+        <tr>
+            <th>Inscrição Substituição Tributária</th>
+            <td>' . $inscricao_subst_trib . '</td>
+        </tr>
+        <tr>
+            <th>Inscrição Estadual</th>
+            <td>' . $inscricao_estadual . '</td>
+        </tr>
+        <tr>
+            <th>Hora de Entrada e Saída</th>
+            <td>' . $hora_entrada_saida . '</td>
+        </tr>
+        <tr>
+            <th>Base de Cálculo ICMS</th>
+            <td>' . $base_calculo_icms . '</td>
+        </tr>
+        <tr>
+            <th>Valor ICMS</th>
+            <td>' . $valor_icms . '</td>
+        </tr>
+        <tr>
+            <th>Base de Cálculo ICMS Substituição Tributária</th>
+            <td>' . $base_calculo_icms_st . '</td>
+        </tr>
+        <tr>
+            <th>Valor ICMS Substituição Tributária</th>
+            <td>' . $valor_icms_st . '</td>
+        </tr>
+        <tr>
+            <th>Valor de Importação</th>
+            <td>' . $valor_importacao . '</td>
+        </tr>
+        <tr>
+            <th>Valor ICMS UF Remetente</th>
+            <td>' . $valor_icms_uf_remet . '</td>
+        </tr>
+        <tr>
+            <th>Valor FCP</th>
+            <td>' . $valor_fcp . '</td>
+        </tr>
+        <tr>
+            <th>Valor PIS</th>
+            <td>' . $valor_pis . '</td>
+        </tr>
+        <tr>
+            <th>Valor Total dos Produtos</th>
+            <td>' . $valor_total_produtos . '</td>
+        </tr>
+        <tr>
+            <th>Valor Frete</th>
+            <td>' . $valor_frete . '</td>
+        </tr>
+        <tr>
+            <th>Valor Seguro</th>
+            <td>' . $valor_seguro . '</td>
+        </tr>
+        <tr>
+            <th>Desconto</th>
+            <td>' . $desconto . '</td>
+        </tr>
+        <tr>
+            <th>Outras Despesas</th>
+            <td>' . $outras_despesas . '</td>
+        </tr>
+        <tr>
+            <th>Valor IPI</th>
+            <td>' . $valor_ipi . '</td>
+        </tr>
+        <tr>
+            <th>Valor ICMS UF Destinatário</th>
+            <td>' . $valor_icms_uf_dest . '</td>
+        </tr>
+        <tr>
+            <th>Valor Aproximado de Tributos</th>
+            <td>' . $valor_aprox_tributo . '</td>
+        </tr>
+        <tr>
+            <th>Valor Cofins</th>
+            <td>' . $valor_confins . '</td>
+        </tr>
+        <tr>
+            <th>Valor Total da Nota</th>
+            <td>' . $valor_total_nota . '</td>
+        </tr>
+
+        <tr>
+            <th>Código</th>
+            <td>' . $codigo . '</td>
+        </tr>
+        <tr>
+            <th>Descrição do Produto</th>
+            <td>' . $descricao_produto . '</td>
+        </tr>
+        <tr>
+            <th>NCMS</th>
+            <td>' . $ncms . '</td>
+        </tr>
+        <tr>
+            <th>CST</th>
+            <td>' . $cst . '</td>
+        </tr>
+        <tr>
+            <th>CFOP</th>
+            <td>' . $cfop . '</td>
+        </tr>
+        <tr>
+            <th>Unidade</th>
+            <td>' . $unidade . '</td>
+        </tr>
+        <tr>
+            <th>Quantidade</th>
+            <td>' . $quantidade . '</td>
+        </tr>
+        <tr>
+            <th>Valor Unitário</th>
+            <td>' . $valor_unitario . '</td>
+        </tr>
+        <tr>
+            <th>Valor Total</th>
+            <td>' . $valor_total . '</td>
+        </tr>
+        <tr>
+            <th>Base de Cálculo ICMS</th>
+            <td>' . $bc_icms . '</td>
+        </tr>
+        <tr>
+            <th>Valor Final ICMS</th>
+            <td>' . $valor_icms_final . '</td>
+        </tr>
+        <tr>
+            <th>Valor Final IPI</th>
+            <td>' . $valor_ipi_final . '</td>
+        </tr>
+        <tr>
+            <th>Alíquota ICMS</th>
+            <td>' . $aliq_icms . '</td>
+        </tr>
+        <tr>
+            <th>Alíquota IPI</th>
+            <td>' . $aliq_ipi . '</td>
+        </tr>
+        <tr>
+            <th>Reserva Fisco</th>
+            <td>' . $reserva_fisco . '</td>
+        </tr>
+    </table>
+';
 
     require_once __DIR__ . '/vendor/autoload.php';
     $options = new Options();

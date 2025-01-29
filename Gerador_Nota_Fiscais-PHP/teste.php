@@ -390,6 +390,7 @@
                 </tr>
             </tbody>
         </table>
+
         <!-- Natureza da Operação -->
         <table cellpadding="0" cellspacing="0" class="boxNaturezaOperacao no-top" border="1">
             <tbody>

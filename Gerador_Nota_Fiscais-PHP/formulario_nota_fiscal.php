@@ -133,7 +133,7 @@
         <label for="outras_retencoes">Outras Retenções:</label>
         <input type="text" id="outras_retencoes" name="outras_retencoes" required><br>
 
-        <h1>Inscrição MUNICIPAL<'/h1>
+        <h1>Inscrição MUNICIPAL</h1>
         <label for="inscricao_municipal">Inscrição Municipal:</label>
         <input type="text" id="inscricao_municipal" name="inscricao_municipal" required><br>
 
@@ -148,7 +148,115 @@
             <option value="Pix">Pix</option>
             <!-- <option value="Cartão de Crédito">Cartão de Crédito</option> -->
             <option value="Boleto Bancário">Boleto Bancário</option>
-        </select><br>
+        </select><br>        
+
+        <label for="inscricao_subst_trib">Inscrição Estadual do Subst. Trib:</label>
+        <input type="text" id="inscricao_subst_trib" name="inscricao_subst_trib" required><br>
+
+        <label for="inscricao_estadual">Inscrição Estadual:</label>
+        <input type="text" id="inscricao_estadual" name="inscricao_estadual" required><br>
+
+        <label for="hora_entrada_saida">Hora Entrada/Saída:</label>
+        <input type="time" id="hora_entrada_saida" name="hora_entrada_saida" required><br>
+
+        <label for="base_calculo_icms">Base de Cálculo do ICMS:</label>
+        <input type="number" step="0.01" id="base_calculo_icms" name="base_calculo_icms" readonly><br>
+
+        <label for="valor_icms">Valor do ICMS:</label>
+        <input type="number" step="0.01" id="valor_icms" name="valor_icms" readonly><br>
+
+        <label for="base_calculo_icms_st">Base de Cálculo do ICMS ST:</label>
+        <input type="number" step="0.01" id="base_calculo_icms_st" name="base_calculo_icms_st" readonly><br>
+
+        <label for="valor_icms_st">Valor do ICMS ST:</label>
+        <input type="number" step="0.01" id="valor_icms_st" name="valor_icms_st" readonly><br>
+
+        <label for="valor_importacao">V. Imp. Importação:</label>
+        <input type="number" step="0.01" id="valor_importacao" name="valor_importacao" readonly><br>
+
+        <label for="valor_icms_uf_remet">V. ICMS UF Remet.:</label>
+        <input type="number" step="0.01" id="valor_icms_uf_remet" name="valor_icms_uf_remet" readonly><br>
+
+        <label for="valor_fcp">Valor do FCP:</label>
+        <input type="number" step="0.01" id="valor_fcp" name="valor_fcp" readonly><br>
+
+        <label for="valor_pis">Valor do PIS:</label>
+        <input type="number" step="0.01" id="valor_pis" name="valor_pis" readonly><br>
+
+        <label for="valor_total_produtos">V. Total de Produtos:</label>
+        <input type="number" step="0.01" id="valor_total_produtos" name="valor_total_produtos" readonly><br>
+
+        <label for="valor_frete">Valor do Frete:</label>
+        <input type="number" step="0.01" id="valor_frete" name="valor_frete" required><br>
+
+        <label for="valor_seguro">Valor do Seguro:</label>
+        <input type="number" step="0.01" id="valor_seguro" name="valor_seguro" required><br>
+
+        <label for="desconto">Desconto:</label>
+        <input type="number" step="0.01" id="desconto" name="desconto" required><br>
+
+        <label for="outras_despesas">Outras Despesas:</label>
+        <input type="number" step="0.01" id="outras_despesas" name="outras_despesas" required><br>
+
+        <label for="valor_ipi">Valor do IPI:</label>
+        <input type="number" step="0.01" id="valor_ipi" name="valor_ipi" readonly><br>
+
+        <label for="valor_icms_uf_dest">V. ICMS UF Dest.:</label>
+        <input type="number" step="0.01" id="valor_icms_uf_dest" name="valor_icms_uf_dest" readonly><br>
+
+        <label for="valor_aprox_tributo">V. Aproximado do Tributo:</label>
+        <input type="number" step="0.01" id="valor_aprox_tributo" name="valor_aprox_tributo" readonly><br>
+
+        <label for="valor_confins">Valor da CONFINS:</label>
+        <input type="number" step="0.01" id="valor_confins" name="valor_confins" readonly><br>
+
+        <label for="valor_total_nota">V. Total da Nota:</label>
+        <input type="number" step="0.01" id="valor_total_nota" name="valor_total_nota" readonly><br>
+
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" name="codigo" required><br>
+
+        <label for="descricao_produto">Descrição do Produto/Serviço:</label>
+        <input type="text" id="descricao_produto" name="descricao_produto" required><br>
+
+        <label for="ncms">NCMSH:</label>
+        <input type="text" id="ncms" name="ncms" required><br>
+
+        <label for="cst">CST:</label>
+        <input type="text" id="cst" name="cst" required><br>
+
+        <label for="cfop">CFOP:</label>
+        <input type="text" id="cfop" name="cfop" required><br>
+
+        <label for="unidade">UN:</label>
+        <input type="text" id="unidade" name="unidade" required><br>
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" step="0.01" id="quantidade" name="quantidade" required><br>
+
+        <label for="valor_unitario">VLR. Unitário:</label>
+        <input type="number" step="0.01" id="valor_unitario" name="valor_unitario" required><br>
+
+        <label for="valor_total">VLR. Total:</label>
+        <input type="number" step="0.01" id="valor_total" name="valor_total" readonly><br>
+
+        <label for="bc_icms">BC ICMS:</label>
+        <input type="number" step="0.01" id="bc_icms" name="bc_icms" readonly><br>
+
+        <label for="valor_icms_final">VLR. ICMS:</label>
+        <input type="number" step="0.01" id="valor_icms_final" name="valor_icms_final" readonly><br>
+
+        <label for="valor_ipi_final">VLR. IPI:</label>
+        <input type="number" step="0.01" id="valor_ipi_final" name="valor_ipi_final" readonly><br>
+
+        <label for="aliq_icms">Alíquota ICMS (%):</label>
+        <input type="number" step="0.01" id="aliq_icms" name="aliq_icms" required><br>
+
+        <label for="aliq_ipi">Alíquota IPI (%):</label>
+        <input type="number" step="0.01" id="aliq_ipi" name="aliq_ipi" required><br>
+
+        <label for="reserva_fisco">Reserva ao Fisco:</label>
+        <input type="text" id="reserva_fisco" name="reserva_fisco" required><br>
 
         <label for="valor_total">Valor Total:</label>
         <input type="text" id="valor_total" name="valor_total" readonly><br>
