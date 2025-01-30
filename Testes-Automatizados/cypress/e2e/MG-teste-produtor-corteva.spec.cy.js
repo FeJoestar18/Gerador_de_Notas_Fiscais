@@ -13,11 +13,16 @@ import gerarInscricao from '../support/gerarInscricao';
 import gerarValoresDados from '../support/UltimosValores';
 
 describe('template spec', () => {
+  const quantidade_testes = 10;
 
     it('Executa o teste em looping', () => {
       Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
       });
+
+      for (let i = 0; i < quantidade_testes; i++) {
+        cy.log(`Teste ${i+1} de ${quantidade_testes}`);
+            
 
             const descricaoServico = gerarDescricaoServico();
             const codigoServico = gerarCodigoServico();
@@ -65,9 +70,9 @@ describe('template spec', () => {
             cy.get('#ie').type("61.064.929/0043-28");
   
             // cliente
-            cy.get('#nome_cliente').type("SPAle Teste");
-            cy.get('#cpf_cliente').type("848.055.373-10");
-            cy.get('#cep_cliente').type("01234-000").should('be.visible');
+            cy.get('#nome_cliente').type("Novo Produtor MG Outros");
+            cy.get('#cpf_cliente').type("130-596-980-40");
+            cy.get('#cep_cliente').type("31160-342").should('be.visible');
             // cy.wait(5000);
             // cy.get('#logradouro_cliente').should('be.visible').click();
             cy.get('#numero_cliente').type("30");
@@ -98,7 +103,7 @@ describe('template spec', () => {
             cy.log('Dados gerados: ', JSON.stringify(dados));
       
             // Verificando especificamente o valor de inscricaoEstadual
-            cy.log('Inscrição Estadual: ', dados.inscricaoEstadual); // Log para verificar
+            cy.log('Inscrição Estadual: ', dados.inscricaoEstadual); 
             
             // Verifique se a inscrição estadual é válida antes de usá-la
             if (dados.inscricaoEstadual) {
@@ -136,6 +141,7 @@ describe('template spec', () => {
             cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/gerador_nota_fiscal.php');
   
             cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
+            }
           });
         });
       

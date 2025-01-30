@@ -60,109 +60,19 @@ function validarCPF($cpf) {
 
     return ($cpf[9] == $digito1 && $cpf[10] == $digito2);
 }
-function validarEstado($uf){
-    switch ($uf)
-            {
-                case "RO":
-                    return "11";
-                //break;
-                case "AC":
-                    return "12";
-                //break;
-                case "AM":
-                    return "13";
-                //break;
-                case "RR":
-                    return "14";
-                //break;
-                case "PA":
-                    return "15";
-                //break;
-                case "AP":
-                    return "16";
-                //break;
-                case "TO":
-                    return "17";
-                //break;
-                case "MA":
-                    return "21";
-                //break;
-                case "PI":
-                    return "22";
-                //break;
-                case "CE":
-                    return "23";
-                //break;
-                case "RN":
-                    return "24";
-                //break;
-                case "PB":
-                    return "25";
-                //break;
-                case "PE":
-                    return "26";
-                //break;
-                case "AL":
-                    return "27";
-                //break;
-                case "SE":
-                    return "28";
-                //break;
-                case "BA":
-                    return "29";
-                //break;
-                case "MG":
-                    return "31";
-                //break;
-                case "ES":
-                    return "32";
-                //break;
-                case "RJ":
-                    return "33";
-                //break;
-                case "SP":
-                    return "35";
-                //break;
-                case "PR":
-                    return "41";
-                //break;
-                case "SC":
-                    return "42";
-                //break;
-                case "RS":
-                    return "43";
-                //break;
-                case "MS":
-                    return "50";
-                //break;
-                case "MT":
-                    return "51";
-                //break;
-                case "GO":
-                    return "52";
-                //break;
-                case "DF":
-                    return "53";
-                //break;
-                default:
-                    return "0";
-                //break;
-            }
-    
+function validarEstado($uf) {
+    $estados = [
+        "RO" => "11", "AC" => "12", "AM" => "13", "RR" => "14", "PA" => "15", "AP" => "16", "TO" => "17",
+        "MA" => "21", "PI" => "22", "CE" => "23", "RN" => "24", "PB" => "25", "PE" => "26", "AL" => "27",
+        "SE" => "28", "BA" => "29", "MG" => "31", "ES" => "32", "RJ" => "33", "SP" => "35", "PR" => "41",
+        "SC" => "42", "RS" => "43", "MS" => "50", "MT" => "51", "GO" => "52", "DF" => "53"
+    ];
+
+    return $estados[$uf] ?? "0"; 
 }
 
-function gerarChaveAcesso(
-    $uf, 
-    $ano, 
-    $mes, 
-    $cnpj, 
-    $modelo, 
-    $serie, 
-    $numeroNota, 
-    $codigoAleatorio
-) {
+function gerarChaveAcesso($uf, $ano, $mes, $cnpj, $modelo, $serie, $numeroNota, $codigoAleatorio) {
     $cnpj = preg_replace('/\D/', '', $cnpj);
-
     $cnpj = str_pad($cnpj, 14, '0', STR_PAD_LEFT);
 
     $chave = str_pad($uf, 2, '0', STR_PAD_LEFT) .
@@ -188,10 +98,9 @@ function calcularDigitoVerificador($chave) {
         $soma += (int)$chave[$i] * $pesos[$pesoAtual]; 
         $pesoAtual = ($pesoAtual + 1) % count($pesos);
     }
-    
 
     $resto = $soma % 11;
-    return $resto < 2 ? 0 : 11 - $resto; 
+    return $resto < 2 ? 0 : 11 - $resto;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -254,25 +163,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($estado) || empty($data_emissao) || empty($serie) || empty($numero_nf) || empty($cnpj)) {
         echo "Por favor, preencha todos os campos obrigatórios.";
-    } else {
-        
-        $uf = substr($estado, 0, 2); 
-        $uf = validarEstado($uf);
-        $ano = substr($data_emissao, 2, 2); 
-        $mes = substr($data_emissao, 5, 2); 
-        $codigoAleatorio = rand(100000000, 999999999); 
-
-        $modelo = "55"; 
-        $serie = str_pad($serie, 3, '0', STR_PAD_LEFT); // Série da nota
-
-        $numeroNota = str_pad($numero_nf, 9, '0', STR_PAD_LEFT);
-
-        $key = gerarChaveAcesso($uf, $ano, $mes, $cnpj, $modelo, $serie, $numeroNota, $codigoAleatorio);
-        $formattedKey = chunk_split($key, 4, ' ');
-
-        echo "Chave de Acesso: " . $formattedKey;
+        exit;
     }
-}
+
+    $uf = validarEstado($estado); 
+    if ($uf === "0") {
+        echo "Estado inválido.";
+        exit;
+    }
+
+    $ano = substr($data_emissao, 2, 2);
+    $mes = substr($data_emissao, 5, 2);
+    $codigoAleatorio = rand(100000000, 999999999);
+    $modelo = "55";
+    $serie = str_pad($serie, 3, '0', STR_PAD_LEFT);
+    $numeroNota = str_pad($numero_nf, 9, '0', STR_PAD_LEFT);
+
+    $key = gerarChaveAcesso($uf, $ano, $mes, $cnpj, $modelo, $serie, $numeroNota, $codigoAleatorio);
+    $formattedKey = chunk_split($key, 4, ' ');
+
+    echo "Chave de Acesso: " . $formattedKey;
+    }
+
 
 if (isset($_POST['cpf'])) {
     $cpf = $_POST['cpf'];
@@ -707,7 +619,7 @@ if (isset($_POST['cnpj']) && !validarCNPJ($_POST['cnpj'])) {
                     </td>
                     <td style="width: 67.5mm;">
                         <span class="nf-label">INSCRIÇÃO ESTADUAL DO SUBST. TRIB.</span>
-                        <span class="info">$inscricao_subst_trib</span>
+                        <span class="info">'. $inscricao_subst_trib .'</span>
                     </td>
                     <td style="width: 64.3mm">
                         <span class="nf-label">CNPJ</span>
@@ -960,7 +872,7 @@ if (isset($_POST['cnpj']) && !validarCNPJ($_POST['cnpj'])) {
         $dompdf->getCanvas()->image('data:image/png;base64,' . $barcode_base64, 100, 15, 400, 150);
         
     }
-
+    
     file_put_contents($filename, $dompdf->output());
 
     echo "<div style='text-align:center;'>
