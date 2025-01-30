@@ -144,7 +144,3 @@ describe('template spec', () => {
             }
           });
         });
-      
-   
-  
-  
