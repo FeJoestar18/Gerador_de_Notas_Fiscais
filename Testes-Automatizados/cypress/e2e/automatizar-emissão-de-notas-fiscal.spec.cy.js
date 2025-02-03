@@ -13,6 +13,7 @@ import gerarInscricao from '../support/gerarInscricao';
 import gerarValoresDados from '../support/UltimosValores';
 
 describe('template spec', () => {
+  const Quantidade_teste = 20;
 
   it('Executa o teste em looping', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
@@ -23,9 +24,12 @@ describe('template spec', () => {
         const ceps = data.ceps;
         const cepAleatorio = ceps[Math.floor(Math.random() * ceps.length)];
 
-        cy.fixture('cepcliente.json').then((data) => {
+         cy.fixture('cepcliente.json').then((data) => {
           const cepsCliente = data.ceps_cliente;
           const cepAleatorioCliente = cepsCliente[Math.floor(Math.random() * cepsCliente.length)];
+          
+          for (let i = 0; i < Quantidade_teste; i++) {           
+            cy.log(`Execução ${i + 1}`);
 
           const CNPJ = geradorCNPJ();
           const CPF = generateRandomCPF();
@@ -155,8 +159,10 @@ describe('template spec', () => {
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/gerador_nota_fiscal.php');
 
           cy.visit('http://localhost/Gerador_de_Notas_Fiscais/Gerador_Nota_Fiscais-PHP/formulario_nota_fiscal.php');
+            }
+           });
         });
       });
     });
-  });
+  
 
